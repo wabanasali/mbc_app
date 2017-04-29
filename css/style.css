@@ -1,0 +1,193 @@
+#header{
+	color: blue;
+	background-color: black;
+	width: 100%;
+	overflow: auto;
+}
+#church_icon{
+	padding-top: 25px;
+	padding-left: 55px;
+	padding-right: 15px;
+	padding-bottom: 30px;
+}
+#church_logo{
+	padding-bottom: 5px;
+}
+#logout_label{
+	float: right;
+	position: relative;
+	/*left: 550px;*/
+	left: 85%;
+	margin-top: 10%;
+}
+#login_form{
+	float: right;
+	position: relative;
+	/*top: 40px;*/
+	margin-top: 8%;
+	/*right: 20px;*/
+	margin-right: 5%;
+}
+#mbc_background_picture{
+	width: 120%;
+	position: absolute;
+}
+#exampleInputButton1{
+	width: 100%;
+}
+#registration_form{
+	/*border-radius: 10px;*/
+	/*background-color:#acacac;*/
+	margin-top: 15%;
+	width: 30%;
+	color: orange;
+	display: inline-block;
+	/*z-index: 10;*/
+}
+#registration_form_body{
+	position: relative;
+	/*display: none;*/
+	margin-bottom: 40px;
+	
+}
+#signup_notification{
+	color: red;
+	text-align: center;
+}
+#login_notification{
+	color: red;
+	text-align: center;
+}
+/*Here is the css for overview*/
+#overview_menus{
+	color: white;
+	background-color: #252525;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	overflow: auto;
+	/*position: absolute;*/
+}
+.selector_line{
+	border-bottom: 10px solid white;
+	/*border-width: 10px;*/
+	padding-bottom: 5px;
+}
+.listStyle{
+	list-style-type: none;
+}
+.main_body_bground{
+	background-color: black;
+	overflow: auto;
+}
+#main_body_bground{
+	/*height: 100%;*/
+	background-color: black;
+	/*position: absolute;*/
+	overflow: auto;
+	/*height: 100px;*/
+}
+#cash_in_cash_out_form{
+	color: white;
+	background-color: #252525;
+	width: 80%;
+	padding-bottom: 5%;
+	margin-top: 37%;
+	margin-bottom: 100%;
+	margin-right: 200%;
+}
+#cash_in_button{
+	background-color: #959595;
+	color: black;
+	padding-left: 4%;
+	padding-right: 4%;
+	margin-left: 15%
+}
+#cash_out_button{
+	background-color: #959595;
+	color: black;
+	margin-left: 6%;
+}
+#cash_in_cash_out_buttons{
+	padding-top: 12px;
+}
+#overview_statistics_area{
+	background-color: #959595;
+	padding-bottom: 5%;
+	margin-top: 10%;
+	margin-left: 4%;
+}
+#cash_in_area{
+	background-color: white;
+	padding-bottom: 5%;
+	margin-top: 10%;
+	margin-left: 4%;
+}
+#cash_out_area{
+	background-color: white;
+	padding-bottom: 5%;
+	margin-top: 10%;
+	margin-left: 4%;
+}
+#background{
+	background-color: black;
+	overflow: auto;
+}
+
+#custom_from_date{
+
+}
+#custom_to_date{
+	/*margin-left: -45%;*/
+}
+#go_button{
+	/*margin-left: -900%;*/
+	margin-top: 19%;
+	width: 100%;
+}
+.margin_from_menu{
+	margin-top: 20%;
+}
+.margin_from_menu2{
+	margin-top: 19%;
+}
+#from_to_form_bkground{
+	background-color: black;
+	padding-bottom: 1%;
+	width: 70%;
+}
+#container_of_form{
+
+}
+#notification{
+	padding-top: 10%;
+	margin-left: 20%
+}
+/*This style is for the glyphicons on the overview transactions page*/
+#edit_glyphicon{
+	padding-left: 20%;
+}
+#remove_glyphicon{
+	padding-left: 20%;
+}
+/*End of style for glyphicons*/
+.select-style {
+    border: 1px solid #ccc;
+    width: 140px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa url("..//images/icon-select.png") no-repeat 100% 50%;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
