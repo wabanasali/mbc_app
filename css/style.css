@@ -68,6 +68,7 @@
 	/*position: absolute;*/
 }
 .selector_line{
+	/*border-bottom: 10px solid white;*/
 	border-bottom: 10px solid white;
 	/*border-width: 10px;*/
 	padding-bottom: 5px;
@@ -88,6 +89,7 @@
 }
 #cash_in_cash_out_form{
 	color: white;
+	/*background-color: #959595;*/
 	background-color: #252525;
 	width: 80%;
 	padding-bottom: 5%;
@@ -117,13 +119,15 @@
 	margin-left: 4%;
 }
 #cash_in_area{
-	background-color: white;
+	/*background-color: white;*/
+	background-color: #959595;
 	padding-bottom: 5%;
 	margin-top: 10%;
 	margin-left: 4%;
 }
 #cash_out_area{
-	background-color: white;
+	/*background-color: white;*/
+	background-color: #959595;
 	padding-bottom: 5%;
 	margin-top: 10%;
 	margin-left: 4%;
@@ -133,12 +137,11 @@
 	overflow: auto;
 }
 
-#custom_from_date{
+/*#custom_from_date{
 
 }
 #custom_to_date{
-	/*margin-left: -45%;*/
-}
+}*/
 #go_button{
 	/*margin-left: -900%;*/
 	margin-top: 19%;
@@ -155,9 +158,9 @@
 	padding-bottom: 1%;
 	width: 70%;
 }
-#container_of_form{
+/*#container_of_form{
 
-}
+}*/
 #notification{
 	padding-top: 10%;
 	margin-left: 20%

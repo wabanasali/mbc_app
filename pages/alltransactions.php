@@ -137,6 +137,7 @@
 				}
 			});
 		});
+		//some call back to write to file
 	    $('.form_datetime').datetimepicker({
 	        //language:  'fr',
 	        weekStart: 1,

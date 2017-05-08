@@ -14,26 +14,27 @@
  if ($month > 0 && $month < 4) {
  	// first quater
  	$qtr = 1;
- 	$start = '01/01/'.$year.'';
- 	$end = '31/03/'.$year.'';
+ 	$year = date("Y",strtotime("-1 year"));
+ 	$start = ''.$year.'-12-31';
+ 	$end = ''.$year.'-04-01';
  }
  elseif ($month > 3 && $month < 7) {
  	// second quater
  	$qtr = 2;
- 	$start = '01/04/'.$year.'';
- 	$end = '30/06/'.$year.'';
+ 	$start = ''.$year.'-03-31';
+ 	$end = ''.$year.'-07-01';
  }
  elseif ($month > 6 && $month < 10) {
  	# third quater
  	$qtr = 3;
- 	$start = '01/07/'.$year.'';
- 	$end = '30/09/'.$year.'';
+ 	$start = ''.$year.'-06-30';
+ 	$end = ''.$year.'-10-01';
  }
  elseif ($month > 9 && $month < 13) {
  	# fourth quater
  	$qtr = 4;
- 	$start = '01/10/'.$year.'';
- 	$end = '31/12/'.$year.'';
+ 	$start = ''.$year.'-09-30';
+ 	$end = ''.$year.'-01-01';
  }
  else{
  	//do nothing

@@ -95,22 +95,6 @@
 			document.getElementById('cash_in_rectangle').removeAttribute('hidden');
 			document.getElementById('cash_in_hidder').removeAttribute('hidden');
 		}
-		// $(function(){
-		// 	$('button#cash_in_button').click(function(e){
-		// 		var today = new Date();
-		// 		// alert(toda.getMonth());
-		// 		var todayMonth = today.getMonth();
-		// 		var todayYear = today.getFullYear();
-		// 		if (todayMonth != 'null' && todayYear != 'null') {
-		// 			$.post('sp_controller_download_qreport.php',{tdayMonth : todayMonth, tdayYear: todayYear}, function(data){
-		// 				 alert(data);
-		// 			});
-		// 		}
-		// 		else{
-		// 			alert('No date has been picked');
-		// 		}
-		// 	});
-		// });
 		function download_qreport(){
 			window.location.href = 'http://localhost/MBC/quater_report.php';
 		}
