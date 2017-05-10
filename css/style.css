@@ -165,7 +165,7 @@
 	width: 70%;
 }
 /*postion modal*/
-#anual_rpt_notification{
+.anual_rpt_notification{
 	color: red;
 	font-family: cursive;
 }
