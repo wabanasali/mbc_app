@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="..//css/style.css">
 	<script src="..//js/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="..//css/bootstrap.min.css">
-	<link href="..//bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<!-- <link href="..//bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
 	<script>
 		function fetch_name(str) {
 		        if (str.length == 0) {
@@ -41,6 +41,12 @@
 		        xmlhttp.send();
 		    }
 		}
+		function update_rpt_notification(){
+			var mzg = document.getElementById('fin_year_id').value;
+			if (mzg != 'Choose') {
+				document.getElementById('anual_rpt_notification').innerHTML = 'YOU ARE NOW ABOUT TO PRINT FINANCIAL REPORT FOR THE YEAR ';
+				document.getElementById('anual_rpt_notification').style.color = "blue";
+			}
 		function offerings_view(){
 			var optn = document.getElementById('motif').value;
 			if (optn == 'Harvest' || optn == 'Offerings') {
@@ -76,24 +82,8 @@
 				document.getElementById('comment_group_out').setAttribute('hidden', 'true');
 			}
 		}
-		function hideCashIn(){
-			// alert('You are now going to hide Cash in Form');
-			//add hidden attribute to cashin form & add hidden attribute to cashout link
-			document.getElementById('cash_in_rectangle').setAttribute('hidden', 'true');
-			document.getElementById('cash_in_hidder').setAttribute('hidden', 'true');
-			//remove hidden attribute from cash out form & remove hidden attribute from cash in linkd
-			document.getElementById('cash_out_rectangle').removeAttribute('hidden');
-			document.getElementById('cash_out_hidder').removeAttribute('hidden');
-
-		}
-		function hideCashOut(){
-			// alert('You are now going to hide Cash out Form');
-			//add hidden attribute to cash out form & add hidden attribute to cash in link
-			document.getElementById('cash_out_rectangle').setAttribute('hidden', 'true');
-			document.getElementById('cash_out_hidder').setAttribute('hidden', 'true');
-			//remove hidden attribute from cash in form & remove hidden attribute from cash out link
-			document.getElementById('cash_in_rectangle').removeAttribute('hidden');
-			document.getElementById('cash_in_hidder').removeAttribute('hidden');
+		function download_qreport(){
+			window.location.href = 'http://localhost/MBC/quater_report.php';
 		}
    </script>
 </head>
@@ -137,56 +127,58 @@
 			</ul>
 		</div>
 		<div class="row" class="main_body_bground">
-			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="cash_in_rectangle" hidden="">
-				<div class="container-fluid" id="cash_in_area">
-					<h4 class="text-center">Cash In Area</h4>
-					<form class="form-horizontal" action="../controller.php?todd3=cash_in" role="form" method="POST">
-						<input type="hidden" name="todo3" value="cash_in" />
-						<div class="form-group">
-							<label for="motif" class="col-sm-2 control-label">Motif</label>
-							<div class="col-sm-10">
-								<div class="select-style">
-									<select name="selection" id="motif" onchange="offerings_view()">
-										<option value="Tithes">Tithes</option>
-										<option value="Project">Project</option>
-										<option value="Harvest">HarvestTG</option>
-										<option value="Offerings">Offerings</option>
-										<option value="Others">Others</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="form-group" id="christian_id_grp">
-							<label for="christian_id" class="col-sm-2 control-label">Christian ID</label>
-							<div class="col-sm-6">
-								<input type="text" class="form-control" name="christian_id" id="christian_id" onkeyup="fetch_name(this.value)" required>
-							</div>
-						</div>
-						<div class="form-group" id="christian_name_grp">
-							<label for="christian_name" class="col-sm-2 control-label">Name</label>
-							<div class="col-sm-6">
-								<input type="text" class="form-control" name="christian_name" id="christian_name" >
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="amount" class="col-sm-2 control-label">Amount</label>
-							<div class="col-sm-6">
-								<input type="text" class="form-control" name="amount" id="amount" required>
-							</div>
-						</div>
-						<div class="form-group" id="comment_grp" hidden>
-								<label for="comment" class="col-sm-2 control-label">Comment</label>
+			<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h3 class="modal-title" id="lineModalLabel"></h3>
+					</div>
+					<div class="modal-body">
+						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
+						<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
+						<form class="form-horizontal" action="" role="form" method="POST">
+			              <div class="form-group">
+							<label for="motif" class="col-sm-6 control-label">FINANCIAL YEAR</label>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" name="comment" id="comment">
+									<div class="select-style">
+										<select name="selected_fin_yr_id" id="fin_year_id" onchange="update_rpt_notification()">
+											<?php 
+												$fin_year_info = get_financial_year();
+												echo $fin_year_info;
+											?>
+											<option value="0">Choose</option>
+											<?php
+												foreach ($fin_year_info as $key => $value) {
+													 echo "<option value='".$key['f_year_id']."'>".$value['f_year']."</option>";		
+													}
+											?>
+										</select>
+									</div>
 								</div>
 							</div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-4 col-sm-10">
-						      <button type="submit" class="btn btn-primary">Cash In</button>
-						    </div>
-						  </div>
-					</form>
+							<div class="form-group">
+								<p class="text-center" id="anual_rpt_notification">PLEASE CHOOSE THE YEAR WHOSE FINANCIAL REPORT IS DESIRED</p>
+							</div>
+							<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+							</div>
+							<div class="btn-group btn-delete hidden" role="group">
+								<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
+							</div>
+							<div class="btn-group" role="group">
+								<button type="button" id="saveImage" class="btn btn-primary btn-hover-green" onclick="alert('Done')" data-action="save" role="button">Print</button>
+							</div>
+						</div>
+			            </form>
+
+					</div>
+					<div class="modal-footer">
+						<p class="text-center">Powered By @Theophilus</p>
+					</div>
 				</div>
+			  </div>
 			</div>
 			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" id="cash_out_rectangle">
 				<div class="container-fluid" id="cash_out_area">
@@ -239,7 +231,6 @@
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 				<div class="container-fluid" id="cash_in_cash_out_form">
-					<form class="form-vertical">
 						<h5 class="text-center">Estimated Church Balance</h5>
 						<h5 class="text-center"><b>
 						<?php
@@ -247,27 +238,17 @@
 						 ?> FCFA
 						</b> (Available)</h5>
 						<div class="form-group" id="cash_in_cash_out_buttons">
-							<button type="button" id="cash_in_button">Q Report</button>
-							<button type="button" id="cash_out_button">A Report</button>
+							<button type="button" id="cash_in_button" onclick="download_qreport();">Q Report</button>
+							<button type="button" id="cash_out_button" data-toggle="modal" data-target="#squarespaceModal">A Report</button>
 						</div>
-						<div class="text-center" id="cash_in_hidder" hidden><a href="#" onclick="hideCashIn()">GO TO CASH OUT</a></div>
-						<div class="text-center" id="cash_out_hidder"><a href="#" onclick="hideCashOut()">GO TO CASH IN</a></div>
-					</form>
+						<div class="text-center" id="cash_out_hidder"><a href="operations.php"><button id="go_to_cash_in_button">GO TO CASH IN</button></a></div>
 				</div>
 			</div>
 		</div>
-<!-- 		<div class="row main_body_bground">
-
-			<div class="main_body_bground">
-				<a href=""><span class="glyphicon glyphicon-arrow-up"></span></a>
-			</div>
-		</div> -->
 	</div>
-	
 	<footer>
 		
 	</footer>
 	<script src="..//js/bootstrap.min.js"></script>
-	<!-- <script src="..//js/some_trial.js"></script> -->
 </body>
 </html>

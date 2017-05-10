@@ -554,4 +554,19 @@
 		}
 		return $qtr_stats_mult_array1;
 	}
+	function get_financial_year(){
+		connect_to_db();
+		$f_year_id = 0;
+		$f_year = 2016;
+		$fin_year_multi_array = array();
+		$fin_year_ass_array = array('f_year_id' => $f_year_id, 'f_year' => $f_year);
+		$get_yr_query = "SELECT * FROM financial_year";
+		$fin_yr_result = mysql_query($get_yr_query);
+		while ($fin_yr_data = mysql_fetch_array($fin_yr_result)) {
+			$fin_year_ass_array['f_year_id'] = $fin_yr_data['f_year_id'];
+			$fin_year_ass_array['f_year'] = $fin_yr_data['f_year'];
+			array_push($fin_year_multi_array, $fin_year_ass_array);
+		}
+		return $fin_year_multi_array;
+	}
 ?>

@@ -104,6 +104,12 @@
 	padding-right: 4%;
 	margin-left: 15%
 }
+#go_to_cash_out_button{
+	background-color: #959595;
+}
+#go_to_cash_in_button{
+	background-color: #959595;
+}
 #cash_out_button{
 	background-color: #959595;
 	color: black;
@@ -158,12 +164,10 @@
 	padding-bottom: 1%;
 	width: 70%;
 }
-/*#container_of_form{
-
-}*/
-#notification{
-	padding-top: 10%;
-	margin-left: 20%
+/*postion modal*/
+#anual_rpt_notification{
+	color: red;
+	font-family: cursive;
 }
 /*This style is for the glyphicons on the overview transactions page*/
 #edit_glyphicon{
