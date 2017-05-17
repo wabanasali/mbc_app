@@ -368,7 +368,7 @@
 		$statistics_mult_array = array();
 		$statistics_ass_array = array('amount' => $amount, 'description' => $description, 'day_of_operation' => $day_of_operation, 'type_of_operation' => $type_of_operation);
 		// $exp_query = "SELECT amount, withdrawn_on, purpose FROM expenses WHERE withdrawn_on BETWEEN '$start_date' AND '$end_date'";
-		$exp_query = "SELECT amount, withdrawn_on, purpose FROM expenses WHERE date_format(withdrawn_on,'%Y-%m-%d') > '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') <'$end_date'";
+		$exp_query = "SELECT amount, withdrawn_on, purpose FROM expenses WHERE date_format(withdrawn_on,'%Y-%m-%d') >= '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') <='$end_date'";
 		$exp_result = mysql_query($exp_query);
 		$exp_rows = mysql_num_rows($exp_result);
 		if ($exp_rows > 0) {
@@ -382,64 +382,64 @@
 			}	
 		}
 		// $tithes_query = "SELECT sum(amount) AS amount, paid_on FROM tithes WHERE paid_on BETWEEN '$start_date' AND '$end_date' GROUP BY paid_on";
-		$tithes_query = "SELECT sum(amount) AS amount, paid_on FROM tithes WHERE date_format(paid_on, '%Y-%m-%d') > '$start_date' AND date_format(paid_on, '%Y-%m-%d') <'$end_date' GROUP BY paid_on";
+		$tithes_query = "SELECT sum(amount) AS amount, paid_on FROM tithes WHERE date_format(paid_on, '%Y-%m-%d') >= '$start_date' AND date_format(paid_on, '%Y-%m-%d') <='$end_date' GROUP BY paid_on";
 		$tithes_result = mysql_query($tithes_query);
 		$tithes_rows = mysql_num_rows($tithes_result);
 		if ($tithes_rows > 0) {
 			while ($tithes_row_data = mysql_fetch_array($tithes_result)) {
 				$statistics_ass_array['amount'] = number_format($tithes_row_data['amount']);
-				$statistics_ass_array['description'] = 'Total tithes for Sunday '.date_format(date_create($tithes_row_data['paid_on']),'Y-m-d');
+				$statistics_ass_array['description'] = 'Total tithes for '.date_format(date_create($tithes_row_data['paid_on']),'Y-m-d');
 				$statistics_ass_array['day_of_operation'] = date_format(date_create($tithes_row_data['paid_on']), 'Y-m-d');
 				$statistics_ass_array['type_of_operation'] = 'CASH IN';
 				array_push($statistics_mult_array, $statistics_ass_array);
 			}
 		}
 		// $htg_query = "SELECT sum(amount) AS amount, collected_on FROM htg_offerings WHERE collected_on BETWEEN '$start_date' AND '$end_date' GROUP BY collected_on";
-		$htg_query = "SELECT sum(amount) AS amount, collected_on FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') >  '$start_date' AND date_format(collected_on, '%Y-%m-%d') <'$end_date' GROUP BY collected_on";
+		$htg_query = "SELECT sum(amount) AS amount, collected_on FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') >=  '$start_date' AND date_format(collected_on, '%Y-%m-%d') <='$end_date' GROUP BY collected_on";
 		$htg_result = mysql_query($htg_query);
 		$htg_rows = mysql_num_rows($htg_result);
 		if ($htg_rows > 0) {
 			while ($htg_row_data = mysql_fetch_array($htg_result)) {
 				$statistics_ass_array['amount'] = number_format($htg_row_data['amount']);
-				$statistics_ass_array['description'] = 'Total HTG for Sunday '.date_format(date_create($htg_row_data['collected_on']),'Y-m-d');
+				$statistics_ass_array['description'] = 'Total HTG for '.date_format(date_create($htg_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['day_of_operation'] = date_format(date_create($htg_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['type_of_operation'] = 'CASH IN';
 				array_push($statistics_mult_array, $statistics_ass_array);
 			}
 		}
-		$other_off_query = "SELECT amount, collected_on FROM other_offerings WHERE date_format(collected_on, '%Y-%m-%d') > '$start_date' AND date_format(collected_on, '%Y-%m-%d') <'$end_date'";
+		$other_off_query = "SELECT amount, collected_on FROM other_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <='$end_date'";
 		$other_off_result = mysql_query($other_off_query);
 		$other_off_rows = mysql_num_rows($other_off_result);
 		if ($other_off_rows > 0) {
 			while ($other_off_row_data = mysql_fetch_array($other_off_result)) {
 				$statistics_ass_array['amount'] = number_format($other_off_row_data['amount']);
-				$statistics_ass_array['description'] = 'Total Other Offerings for Sunday'.date_format(date_create($other_off_row_data['collected_on']),'Y-m-d');
+				$statistics_ass_array['description'] = 'Total Other Offerings for '.date_format(date_create($other_off_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['day_of_operation'] = date_format(date_create($other_off_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['type_of_operation'] = 'CASH IN';
 				array_push($statistics_mult_array, $statistics_ass_array);
 			}
 		}
 
-		$project_query = "SELECT sum(amount) AS amount, collected_on FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') > '$start_date' AND date_format(collected_on, '%Y-%m-%d') < '$end_date' GROUP BY collected_on";
+		$project_query = "SELECT sum(amount) AS amount, collected_on FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date' GROUP BY collected_on";
 		$project_result = mysql_query($project_query);
 		$project_rows = mysql_num_rows($project_result);
 		if ($project_rows > 0) {
 			while ($project_row_data = mysql_fetch_array($project_result)) {
 				$statistics_ass_array['amount'] = number_format($project_row_data['amount']);
-				$statistics_ass_array['description'] = 'Total Project Offerings for Sunday '.date_format(date_create($project_row_data['collected_on']),'Y-m-d');
+				$statistics_ass_array['description'] = 'Total Project Offerings for '.date_format(date_create($project_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['day_of_operation'] = date_format(date_create($project_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['type_of_operation'] = 'CASH IN';
 				array_push($statistics_mult_array, $statistics_ass_array);
 			}
 		}
 		
-		$reg_off_query = "SELECT sum(amount) AS amount, collected_on FROM regular_offerings WHERE date_format(collected_on, '%Y-%m-%d') > '$start_date' AND date_format(collected_on, '%Y-%m-%d') < '$end_date' GROUP BY collected_on";
+		$reg_off_query = "SELECT sum(amount) AS amount, collected_on FROM regular_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date' GROUP BY collected_on";
 		$reg_off_result = mysql_query($reg_off_query);
 		$reg_off_rows = mysql_num_rows($reg_off_result);
 		if ($reg_off_rows > 0) {
 			while ($reg_off_row_data = mysql_fetch_array($reg_off_result)) {
 				$statistics_ass_array['amount'] = number_format($reg_off_row_data['amount']);
-				$statistics_ass_array['description'] = 'Total Worship Service Offerings for Sunday '.date_format(date_create($reg_off_row_data['collected_on']),'Y-m-d');
+				$statistics_ass_array['description'] = 'Total Worship Service Offerings for '.date_format(date_create($reg_off_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['day_of_operation'] = date_format(date_create($reg_off_row_data['collected_on']),'Y-m-d');
 				$statistics_ass_array['type_of_operation'] = 'CASH IN';
 				array_push($statistics_mult_array, $statistics_ass_array);
@@ -455,7 +455,7 @@
 		$qtr_stats_mult_array = array();
 		$qtr_stats_ass_array = array('amount' => $amount, 'rubric' => $rubric);
 		//for current year or specified year
-		$tithe_income_qry = "SELECT sum(amount) AS amount FROM tithes WHERE date_format(paid_on,'%Y-%m-%d') > '$start_date' AND date_format(paid_on,'%Y-%m-%d') < '$end_date'";
+		$tithe_income_qry = "SELECT sum(amount) AS amount FROM tithes WHERE date_format(paid_on,'%Y-%m-%d') >= '$start_date' AND date_format(paid_on,'%Y-%m-%d') <= '$end_date'";
 		$tithe_income_result = mysql_query($tithe_income_qry);
 		$tithe_income_rows = mysql_num_rows($tithe_income_result);
 		if ($tithe_income_rows > 0) {
@@ -466,18 +466,18 @@
 			}
 		}
 		//for current year or specified year
-		$regOff_income_qry = "SELECT sum(amount) AS amount FROM regular_offerings WHERE date_format(collected_on,'%Y-%m-%d') > '$start_date' AND date_format(collected_on,'%Y-%m-%d') < '$end_date'";
+		$regOff_income_qry = "SELECT sum(amount) AS amount FROM regular_offerings WHERE date_format(collected_on,'%Y-%m-%d') >= '$start_date' AND date_format(collected_on,'%Y-%m-%d') <= '$end_date'";
 		$regOff_income_result = mysql_query($regOff_income_qry);
 		$regOff_income_rows = mysql_num_rows($regOff_income_result);
 		if ($regOff_income_rows > 0) {
 			while ($regOff_income_row_data = mysql_fetch_array($regOff_income_result)) {
 				$qtr_stats_ass_array['amount'] = $regOff_income_row_data['amount'];
-				$qtr_stats_ass_array['rubric'] = 'TOTAL SUNDAY OFFERINGS';
+				$qtr_stats_ass_array['rubric'] = 'TOTAL REGULAR OFFERINGS';
 				array_push($qtr_stats_mult_array, $qtr_stats_ass_array);
 			}
 		}
 		//for current year or specified year
-		$prjkOff_income_qry = "SELECT sum(amount) AS amount FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') > '$start_date' AND date_format(collected_on, '%Y-%m-%d') < '$end_date'";
+		$prjkOff_income_qry = "SELECT sum(amount) AS amount FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
 		$prjkOff_income_result = mysql_query($prjkOff_income_qry);
 		$prjkOff_income_rows = mysql_num_rows($prjkOff_income_result);
 		if ($prjkOff_income_rows > 0) {
@@ -488,7 +488,7 @@
 			}
 		}
 		//for current year or specified year
-		$htgOff_income_qry = "SELECT sum(amount) AS amount FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') > '$start_date' AND date_format(collected_on, '%Y-%m-%d') < '$end_date'";
+		$htgOff_income_qry = "SELECT sum(amount) AS amount FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
 		$htgOff_income_result = mysql_query($htgOff_income_qry);
 		$htgOff_income_rows = mysql_num_rows($htgOff_income_result);
 		if ($htgOff_income_rows > 0) {
@@ -499,7 +499,7 @@
 			}
 		}
 		//for current year or specified year
-		$otherOff_income_qry = "SELECT sum(amount) AS amount FROM other_offerings WHERE  date_format(collected_on, '%Y-%m-%d') > '$start_date' AND date_format(collected_on, '%Y-%m-%d') < '$end_date'";
+		$otherOff_income_qry = "SELECT sum(amount) AS amount FROM other_offerings WHERE  date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
 		$otherOff_income_result = mysql_query($otherOff_income_qry);
 		$otherOff_income_rows = mysql_num_rows($otherOff_income_result);
 		if ($otherOff_income_rows > 0) {
@@ -520,7 +520,7 @@
 		$qtr_stats_mult_array1 = array();
 		$qtr_stats_ass_array1 = array('amount' => $amount, 'rubric' => $rubric);
 		//for current year or specified year
-		$pastorSalary_exp_qry = "SELECT sum(amount) AS amount FROM pastors_salary WHERE  date_format(withdrawn_on,'%Y-%m-%d') > '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') < '$end_date'";
+		$pastorSalary_exp_qry = "SELECT sum(amount) AS amount FROM pastors_salary WHERE  date_format(withdrawn_on,'%Y-%m-%d') >= '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') <= '$end_date'";
 		$pastorSalary_exp_result = mysql_query($pastorSalary_exp_qry);
 		$pastorSalary_exp_rows = mysql_num_rows($pastorSalary_exp_result);
 		if ($pastorSalary_exp_rows > 0) {
@@ -531,7 +531,7 @@
 			}
 		}
 		//for current year or specified year
-		$project_exp_qry = "SELECT sum(amount) AS amount FROM project_expenditure WHERE date_format(withdrawn_on,'%Y-%m-%d') > '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') < '$end_date'";
+		$project_exp_qry = "SELECT sum(amount) AS amount FROM project_expenditure WHERE date_format(withdrawn_on,'%Y-%m-%d') >= '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') <= '$end_date'";
 		$project_exp_result = mysql_query($project_exp_qry);
 		$project_exp_rows = mysql_num_rows($project_exp_result);
 		if ($project_exp_rows > 0) {
@@ -542,7 +542,7 @@
 			}
 		}
 		//for current year or specified year
-		$other_exp_qry = "SELECT sum(amount) AS amount FROM other_expenses WHERE date_format(withdrawn_on, '%Y-%m-%d') > '$start_date' AND date_format(withdrawn_on, '%Y-%m-%d') < '$end_date'";
+		$other_exp_qry = "SELECT sum(amount) AS amount FROM other_expenses WHERE date_format(withdrawn_on, '%Y-%m-%d') >= '$start_date' AND date_format(withdrawn_on, '%Y-%m-%d') <= '$end_date'";
 		$other_exp_result = mysql_query($other_exp_qry);
 		$other_exp_rows = mysql_num_rows($other_exp_result);
 		if ($other_exp_rows > 0) {
@@ -553,6 +553,125 @@
 			}
 		}
 		return $qtr_stats_mult_array1;
+	}
+	//annual financial report
+		function annual_income_per_rubric_totals($year){
+		connect_to_db();
+		$amount = 0;
+		$rubric = '';
+		//do year minus one of given year
+		$start_year = $year - 1;
+		//do year plus one of given year
+		$end_year = $year + 1;
+		$start_date = $start_year.'-12-31';
+		$end_date = $end_year.'-01-01';
+		$annual_stats_mult_array = array();
+		$annual_stats_ass_array = array('amount' => $amount, 'rubric' => $rubric);
+		//for current year or specified year
+		$tithe_income_qry = "SELECT sum(amount) AS amount FROM tithes WHERE date_format(paid_on,'%Y-%m-%d') >= '$start_date' AND date_format(paid_on,'%Y-%m-%d') <= '$end_date'";
+		$tithe_income_result = mysql_query($tithe_income_qry);
+		$tithe_income_rows = mysql_num_rows($tithe_income_result);
+		if ($tithe_income_rows > 0) {
+			while ($tithe_income_row_data = mysql_fetch_array($tithe_income_result)) {
+				$annual_stats_ass_array['amount'] = $tithe_income_row_data['amount'];
+				$annual_stats_ass_array['rubric'] = 'TOTAL TITHES';
+				array_push($annual_stats_mult_array, $annual_stats_ass_array);
+			}
+		}
+		//for current year or specified year
+		$regOff_income_qry = "SELECT sum(amount) AS amount FROM regular_offerings WHERE date_format(collected_on,'%Y-%m-%d') >= '$start_date' AND date_format(collected_on,'%Y-%m-%d') <= '$end_date'";
+		$regOff_income_result = mysql_query($regOff_income_qry);
+		$regOff_income_rows = mysql_num_rows($regOff_income_result);
+		if ($regOff_income_rows > 0) {
+			while ($regOff_income_row_data = mysql_fetch_array($regOff_income_result)) {
+				$annual_stats_ass_array['amount'] = $regOff_income_row_data['amount'];
+				$annual_stats_ass_array['rubric'] = 'TOTAL SUNDAY OFFERINGS';
+				array_push($annual_stats_mult_array, $annual_stats_ass_array);
+			}
+		}
+		//for current year or specified year
+		$prjkOff_income_qry = "SELECT sum(amount) AS amount FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
+		$prjkOff_income_result = mysql_query($prjkOff_income_qry);
+		$prjkOff_income_rows = mysql_num_rows($prjkOff_income_result);
+		if ($prjkOff_income_rows > 0) {
+			while ($prjkOff_income_row_data = mysql_fetch_array($prjkOff_income_result)) {
+				$annual_stats_ass_array['amount'] = $prjkOff_income_row_data['amount'];
+				$annual_stats_ass_array['rubric'] = 'TOTAL PROJECT OFFERINGS';
+				array_push($annual_stats_mult_array, $annual_stats_ass_array);
+			}
+		}
+		//for current year or specified year
+		$htgOff_income_qry = "SELECT sum(amount) AS amount FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
+		$htgOff_income_result = mysql_query($htgOff_income_qry);
+		$htgOff_income_rows = mysql_num_rows($htgOff_income_result);
+		if ($htgOff_income_rows > 0) {
+			while ($htgOff_income_row_data = mysql_fetch_array($htgOff_income_result)) {
+				$annual_stats_ass_array['amount'] = $htgOff_income_row_data['amount'];
+				$annual_stats_ass_array['rubric'] = 'TOTAL HARVEST THANKS GIVING OFFERINGS';
+				array_push($annual_stats_mult_array, $annual_stats_ass_array);
+			}
+		}
+		//for current year or specified year
+		$otherOff_income_qry = "SELECT sum(amount) AS amount FROM other_offerings WHERE  date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
+		$otherOff_income_result = mysql_query($otherOff_income_qry);
+		$otherOff_income_rows = mysql_num_rows($otherOff_income_result);
+		if ($otherOff_income_rows > 0) {
+			while ($otherOff_income_row_data = mysql_fetch_array($otherOff_income_result)) {
+				$annual_stats_ass_array['amount'] = $otherOff_income_row_data['amount'];
+				$annual_stats_ass_array['rubric'] = 'TOTAL OTHER OFFERINGS COLLECTED';
+				array_push($annual_stats_mult_array, $annual_stats_ass_array);	
+			}
+		}
+
+		return $annual_stats_mult_array;
+	}
+
+	function annual_expenditure_per_rubric_totals($year){
+		connect_to_db();
+		$amount = 0;
+		$rubric = '';
+		//do year minus one of given year
+		$start_year = $year - 1;
+		//do year plus one of given year
+		$end_year = $year + 1;
+		$start_date = $start_year.'-12-31';
+		$end_date = $end_year.'-01-01';
+		$annual_stats_mult_array1 = array();
+		$annual_stats_ass_array1 = array('amount' => $amount, 'rubric' => $rubric);
+		//for current year or specified year
+		$pastorSalary_exp_qry = "SELECT sum(amount) AS amount FROM pastors_salary WHERE  date_format(withdrawn_on,'%Y-%m-%d') >= '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') <= '$end_date'";
+		$pastorSalary_exp_result = mysql_query($pastorSalary_exp_qry);
+		$pastorSalary_exp_rows = mysql_num_rows($pastorSalary_exp_result);
+		if ($pastorSalary_exp_rows > 0) {
+			while ($pastorSalary_exp_row_data = mysql_fetch_array($pastorSalary_exp_result)) {
+				$annual_stats_ass_array1['amount'] = $pastorSalary_exp_row_data['amount'];
+				$annual_stats_ass_array1['rubric'] = 'TOTAL PASTORS SALARY FOR THE QUATER';
+				array_push($annual_stats_mult_array1, $annual_stats_ass_array1);
+			}
+		}
+		//for current year or specified year
+		$project_exp_qry = "SELECT sum(amount) AS amount FROM project_expenditure WHERE date_format(withdrawn_on,'%Y-%m-%d') >= '$start_date' AND date_format(withdrawn_on,'%Y-%m-%d') <= '$end_date'";
+		$project_exp_result = mysql_query($project_exp_qry);
+		$project_exp_rows = mysql_num_rows($project_exp_result);
+		if ($project_exp_rows > 0) {
+			while ($project_exp_row_data = mysql_fetch_array($project_exp_result)) {
+				$annual_stats_ass_array1['amount'] = $project_exp_row_data['amount'];
+				$annual_stats_ass_array1['rubric'] = 'TOTAL EXPENDITURE ON PROJECTS FOR THE QUATER';
+				array_push($annual_stats_mult_array1, $annual_stats_ass_array1);
+			}
+		}
+		//for current year or specified year
+		$other_exp_qry = "SELECT sum(amount) AS amount FROM other_expenses WHERE date_format(withdrawn_on, '%Y-%m-%d') >= '$start_date' AND date_format(withdrawn_on, '%Y-%m-%d') <= '$end_date'";
+		$other_exp_result = mysql_query($other_exp_qry);
+		$other_exp_rows = mysql_num_rows($other_exp_result);
+		if ($other_exp_rows > 0) {
+			while ($other_exp_row_data = mysql_fetch_array($other_exp_result)) {
+				$annual_stats_ass_array1['amount'] = $other_exp_row_data['amount'];
+				$annual_stats_ass_array1['rubric'] = 'TOTAL MISCELANEOUS EXPENDITURE';
+				array_push($annual_stats_mult_array1, $annual_stats_ass_array1);	
+			}
+		}
+		return $annual_stats_mult_array1;
 	}
 	function get_financial_year(){
 		connect_to_db();

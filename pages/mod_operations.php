@@ -42,16 +42,65 @@
 		}
 		function update_rpt_notification(){
 			var mzg = document.getElementById('fin_year_id').value;
-			if (mzg != 'Choose') {
-				document.getElementById('anual_rpt_notification').innerHTML = 'YOU ARE NOW ABOUT TO PRINT FINANCIAL REPORT FOR THE YEAR ';
+			var dateOfToday = new Date();
+			var yearOfToday = dateOfToday.getFullYear();
+			if (mzg != 0) {
+				//check if it is the current year in order to know how to proceed with the download
+				document.getElementById('saveImage').disabled = false;
+				document.getElementById('anual_rpt_notification').innerHTML = 'YOU ARE NOW ABOUT TO PRINT FINANCIAL REPORT FOR THE YEAR '+mzg;
 				document.getElementById('anual_rpt_notification').style.color = "blue";
+				// document.getElementById().disabled = true;
 			}
 		}
 		function update_rpt_notification2(){
 			var mzg = document.getElementById('fin_year_id2').value;
-			if (mzg != 'Choose') {
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT QUATER FINANCIAL REPORT FOR THE YEAR ';
+			//check for year if it is not current year
+			var todayDate = new Date();
+			var year = todayDate.getFullYear();
+			var month = todayDate.getMonth();
+			if (mzg != year) {
+				//the year is not the current year so we go the year in question
+				document.getElementById('hidden_select_div').removeAttribute('hidden');
+				
+				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT QUATER FINANCIAL REPORT FOR THE YEAR '+mzg;
 				document.getElementById('anual_rpt_notification2').style.color = "blue";
+			}
+			else{
+				//it is the current year
+				document.getElementById('saveImage2').disabled = false;
+				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT QUATER FINANCIAL REPORT FOR THE YEAR '+mzg;
+				document.getElementById('anual_rpt_notification2').style.color = "blue";
+				//remove disabled property
+			}
+		}
+		function update_rpt_notification3(){
+			var desired_quater = document.getElementById('selected_quater_id').value;
+			var year = document.getElementById('fin_year_id2').value;
+			if (desired_quater == 1) {
+				document.getElementById('saveImage2').disabled = false;
+				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 1ST QUATER FINANCIAL REPORT FOR THE YEAR '+year ;
+				document.getElementById('anual_rpt_notification2').style.color = "blue";
+			}
+			else if (desired_quater == 2) {
+				document.getElementById('saveImage2').disabled = false;
+				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 2ND QUATER FINANCIAL REPORT FOR THE YEAR '+year;
+				document.getElementById('anual_rpt_notification2').style.color = "blue";
+				//remove disabled property
+			}
+			else if (desired_quater == 3) {
+				document.getElementById('saveImage2').disabled = false;
+				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 3RD QUATER FINANCIAL REPORT FOR THE YEAR '+year;
+				document.getElementById('anual_rpt_notification2').style.color = "blue";
+				//remove disabled property
+			}
+			else if (desired_quater == 4) {
+				document.getElementById('saveImage2').disabled = false;
+				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 4TH QUATER FINANCIAL REPORT FOR THE YEAR '+year;
+				document.getElementById('anual_rpt_notification2').style.color = "blue";
+				//remove disabled proper
+			}
+			else{
+				alert('You must Select a quater between 1 and 4');	
 			}
 		}
 		function offerings_view(){
@@ -180,9 +229,20 @@
 							      <button type="submit" class="btn btn-primary">Cash Out</button>
 							    </div>
 							  </div>
+							<div id="successful_transaction">
+						  		<?php
+						  			if (isset($_GET['success_notification'])) {
+						  				echo "<p class='text-center'><b>YOUR TRANSACTION WAS SUCCESSFUL</b></p>";
+						  			}
+						  			elseif (isset($_GET['fail_notification'])) {
+						  				echo "<p class='text-center'><b>!!TRANSACTION UNSUCCESSFUL!!</b></p>";
+						  			}
+						  		?>
+						  </div>
 						</form>
 				</div>
-							<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+				<!-- annual modal -->
+		    <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -192,7 +252,8 @@
 					<div class="modal-body">
 						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
 						<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-						<form class="form-horizontal" action="" role="form" method="POST">
+						<form class="form-horizontal" action="../controller.php?areport=annual_report" role="form" method="POST">
+						<input type="hidden" name="areport" value="annual_report"/>
 			              <div class="form-group">
 							<label for="motif" class="col-sm-6 control-label">FINANCIAL YEAR</label>
 								<div class="col-sm-6">
@@ -205,7 +266,7 @@
 											<option value="0">Choose</option>
 											<?php
 												foreach ($fin_year_info as $key => $value) {
-													echo "<option value='".$value['f_year_id']."'>".$value['f_year']."</option>";			
+													echo "<option value='".$value['f_year']."'>".$value['f_year']."</option>";			
 												}
 											?>
 										</select>
@@ -222,8 +283,8 @@
 							<div class="btn-group btn-delete hidden" role="group">
 								<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
 							</div>
-							<div class="btn-group" role="group">
-								<button type="button" id="saveImage" class="btn btn-primary btn-hover-green" onclick="alert('Done')" data-action="save" role="button">Print</button>
+							<div class="btn-group" role="group" disabled>
+								<button type="submit" id="saveImage" class="btn btn-primary btn-hover-green" data-action="save" role="button" disabled>Print</button>
 							</div>
 						</div>
 			            </form>
@@ -235,6 +296,7 @@
 				</div>
 			  </div>
 			</div>
+			<!-- quater modal -->
 			<div class="modal fade" id="squarespaceModal2" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 				<div class="modal-content">
@@ -245,22 +307,37 @@
 					<div class="modal-body">
 						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
 						<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-						<form class="form-horizontal" action="" role="form" method="POST">
+						<form class="form-horizontal" action="../controller.php?qreport=quater_report" role="form" method="POST">
+						<input type="hidden" name="qreport" value="quater_report"/>
 			              <div class="form-group">
 							<label for="motif" class="col-sm-6 control-label">FINANCIAL YEAR</label>
 								<div class="col-sm-6">
 									<div class="select-style">
-										<select name="selected_fin_yr_id2" id="fin_year_id2" onchange="update_rpt_notification2()">
+										<select name="selected_fin_yr_id2" id="fin_year_id2" onchange="update_rpt_notification2()" required>
 											<?php 
 												$fin_year_info = get_financial_year();
-												echo $fin_year_info;
+												// echo $fin_year_info;
 											?>
 											<option value="0">Choose</option>
 											<?php
 												foreach ($fin_year_info as $key => $value) {
-													echo "<option value='".$value['f_year_id']."'>".$value['f_year']."</option>";			
+													echo "<option value='".$value['f_year']."'>".$value['f_year']."</option>";			
 												}
 											?>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" id="hidden_select_div" hidden>
+								<label for="motif" class="col-sm-6 control-label">QUATER OF YEAR</label>
+								<div class="col-sm-6">
+									<div class="select-style">
+										<select name="selected_quater" id="selected_quater_id" onchange="update_rpt_notification3()" required>
+											<option value="0">Choose</option>
+											<option value="1">1st QUATER</option>
+											<option value="2">2nd QUATER</option>
+											<option value="3">3rd QUATER</option>
+											<option value="4">4th QUATER</option>
 										</select>
 									</div>
 								</div>
@@ -273,13 +350,13 @@
 								<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
 							</div>
 							<div class="btn-group btn-delete hidden" role="group">
-								<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
+								<button type="buttonl" id="delImage2" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
 							</div>
-							<div class="btn-group" role="group">
-								<button type="button" id="saveImage" class="btn btn-primary btn-hover-green" onclick="alert('Done')" data-action="save" role="button">Print</button>
+							<div class="btn-group" role="group" disabled>
+								<button type="submit" id="saveImage2" class="btn btn-primary btn-hover-green" data-action="save" role="button" disabled>Print</button>
 							</div>
 						</div>
-			            </form>
+			          </form>
 
 					</div>
 					<div class="modal-footer">

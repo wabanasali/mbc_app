@@ -43,73 +43,75 @@
 			header("Location: home.php");
 			exit();
 		}
-
+		function coordinate_qreport_download(){
+			header("Location: quater_report.php");
+		}
 		function cash_in($selection, $christian_id, $christian_name, $amount, $comment){
 			if ($selection == 'Tithes') {
 				if (cash_in_tithes($christian_id, $amount) == 0) {
 					//successful insertion
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?success_notification=sucess");
 				}
 				else{
 					//unsuccessful insertion
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.phpsuccess_notification=fail");
 				}		
 			}
 			elseif ($selection == 'Project') {
 				if (cash_in_project($christian_id, $amount) == 0) {
-					header("Location:pages/operations.php");	
+					header("Location:pages/operations.php?success_notification=sucess");	
 				}
 				else{
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?success_notification=fail");
 				}
 			}
 			elseif ($selection == 'Harvest') {
-				echo "You selected harvest";
+				// echo "You selected harvest";
 				if (cash_in_htg($amount)) {
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?success_notification=sucess");
 				}
 				else{
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?success_notification=fail");
 				}
 			}
 			elseif ($selection == 'Offerings') {
-				echo "You selected offerings";
+				// echo "You selected offerings";
 				if (cash_in_offerings($amount)) {
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?success_notification=sucess");
 				}
 				else
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?fail_notification=fail");
 			}
 			else{
 				if (cash_in_sp_offerings($amount, $comment)) {
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?success_notification=sucess");
 				}
 				else
-					header("Location:pages/operations.php");
+					header("Location:pages/operations.php?fail_notification=fail");
 			}
 		}
 		function cash_out($supplied_motif1, $supplied_executer_id, $supplied_executer_name, $supplied_executed_amount, $supplied_execution_comment){
 			if ($supplied_motif1 == 'Pastor Salary') {
 				if (cash_out_salary($supplied_executed_amount)) {
-					header("Location:pages/operations.php");
+					header("Location:pages/mod_operations.php?success_notification=sucess");
 				}
 				else
 					//i need an error message with it
-					header("Location:pages/operations.php");
+					header("Location:pages/mod_operations.php?fail_notification=fail1");
 			}
 			elseif ($supplied_motif1 == 'Project') {
 				if (cash_out_project($supplied_executed_amount)) {
-					header("Location:pages/operations.php");
+					header("Location:pages/mod_operations.php?success_notification=sucess");
 				}
 				else
-					header("Location:pages/operations.php");
+					header("Location:pages/mod_operations.php?fail_notification=fail2");
 			}
 			else{
 				if (cash_out_others($supplied_executed_amount, $supplied_execution_comment)) {
-					header("Location:pages/operations.php");
+					header("Location:pages/mod_operations.php?success_notification=sucess");
 				}
 				else
-					header("Location:pages/operations.php");
+					header("Location:pages/mod_operations.php?fail_notification=fail3");
 			}
 		}
 		function available_balance()
@@ -212,6 +214,25 @@
 					$supplied_execution_comment = '';
 				cash_out($supplied_motif1, $supplied_executer_id, $supplied_executer_name, $supplied_executed_amount, $supplied_execution_comment);
 			}
+		}
+		elseif (isset($_POST['qreport'])) {
+			# check if it is current year or an already past year, cause printing and redirect to operations page
+			if ($_POST['qreport'] == 'quater_report') {
+				$supplied_year = trim(strip_tags($_POST['selected_fin_yr_id2']));
+				$supplied_quater = trim(strip_tags($_POST['selected_quater']));
+				if ($supplied_quater == 0) {
+					header("Location: quater_report.php");
+				}
+				else{
+					header("Location: quater_report.php");
+				}
+				// echo "Wonder ful palava";
+			}
+		}
+		elseif (isset($_POST['areport'])) {
+			# check if it is current year or an already past year, cause printing and redirect to operations page
+			$supplied_year = trim(strip_tags($_POST['selected_fin_yr_id']));
+			header("Location: mc_quater_report.php");
 		}
 		else{
 			$available_balance = available_balance();
