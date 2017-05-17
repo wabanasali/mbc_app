@@ -42,15 +42,17 @@
 		}
 		function update_rpt_notification(){
 			var mzg = document.getElementById('fin_year_id').value;
-			if (mzg != 'Choose') {
-				document.getElementById('anual_rpt_notification').innerHTML = 'YOU ARE NOW ABOUT TO PRINT FINANCIAL REPORT FOR THE YEAR ';
+			if (mzg != 0) {
+				document.getElementById('anual_rpt_notification').innerHTML = 'YOU ARE NOW ABOUT TO PRINT FINANCIAL REPORT FOR THE YEAR '+mzg;
 				document.getElementById('anual_rpt_notification').style.color = "blue";
 			}
 		}
 		function update_rpt_notification2(){
 			var mzg = document.getElementById('fin_year_id2').value;
-			if (mzg != 'Choose') {
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT QUATER FINANCIAL REPORT FOR THE YEAR ';
+			if (mzg != 0) {
+				document.getElementById('hidden_select_div').removeAttribute('hidden');
+				
+				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT QUATER FINANCIAL REPORT FOR THE YEAR '+mzg;
 				document.getElementById('anual_rpt_notification2').style.color = "blue";
 			}
 		}
@@ -90,6 +92,7 @@
 			}
 		}
 		function download_qreport(){
+			//need to take year and quater as argument as argument
 			window.location.href = 'http://localhost/MBC/quater_report.php';
 		}
    </script>
@@ -207,8 +210,8 @@
 											<option value="0">Choose</option>
 											<?php
 												foreach ($fin_year_info as $key => $value) {
-													 echo "<option value='".$key['f_year_id']."'>".$value['f_year']."</option>";		
-													}
+													echo "<option value='".$value['f_year']."'>".$value['f_year']."</option>";			
+												}
 											?>
 										</select>
 									</div>
@@ -255,14 +258,28 @@
 										<select name="selected_fin_yr_id2" id="fin_year_id2" onchange="update_rpt_notification2()">
 											<?php 
 												$fin_year_info = get_financial_year();
-												echo $fin_year_info;
+												// echo $fin_year_info;
 											?>
 											<option value="0">Choose</option>
 											<?php
 												foreach ($fin_year_info as $key => $value) {
-													 echo "<option value='".$key['f_year_id']."'>".$value['f_year']."</option>";		
-													}
+													echo "<option value='".$value['f_year']."'>".$value['f_year']."</option>";			
+												}
 											?>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" id="hidden_select_div" hidden>
+								<label for="motif" class="col-sm-6 control-label">QUATER OF YEAR</label>
+								<div class="col-sm-6">
+									<div class="select-style">
+										<select name="selected_quater" id="selected_quater_id">
+											<option value="0">Choose</option>
+											<option value="1">1st QUATER</option>
+											<option value="2">2nd QUATER</option>
+											<option value="3">3rd QUATER</option>
+											<option value="4">4th QUATER</option>
 										</select>
 									</div>
 								</div>
@@ -278,10 +295,10 @@
 								<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
 							</div>
 							<div class="btn-group" role="group">
-								<button type="button" id="saveImage" class="btn btn-primary btn-hover-green" onclick="alert('Done')" data-action="save" role="button">Print</button>
+								<button type="button" id="saveImage" class="btn btn-primary btn-hover-green" onclick="download_qreport()" data-action="save" role="button">Print</button>
 							</div>
 						</div>
-			            </form>
+			          </form>
 
 					</div>
 					<div class="modal-footer">

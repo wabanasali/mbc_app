@@ -205,8 +205,8 @@
 											<option value="0">Choose</option>
 											<?php
 												foreach ($fin_year_info as $key => $value) {
-													 echo "<option value='".$key['f_year_id']."'>".$value['f_year']."</option>";		
-													}
+													echo "<option value='".$value['f_year_id']."'>".$value['f_year']."</option>";			
+												}
 											?>
 										</select>
 									</div>
@@ -258,8 +258,8 @@
 											<option value="0">Choose</option>
 											<?php
 												foreach ($fin_year_info as $key => $value) {
-													 echo "<option value='".$key['f_year_id']."'>".$value['f_year']."</option>";		
-													}
+													echo "<option value='".$value['f_year_id']."'>".$value['f_year']."</option>";			
+												}
 											?>
 										</select>
 									</div>
