@@ -123,6 +123,7 @@
 	padding-bottom: 5%;
 	margin-top: 10%;
 	margin-left: 4%;
+	border-radius: 1%;
 }
 #cash_in_area{
 	/*background-color: white;*/
@@ -130,6 +131,7 @@
 	padding-bottom: 5%;
 	margin-top: 10%;
 	margin-left: 4%;
+	border-radius: 1%;
 }
 #cash_out_area{
 	/*background-color: white;*/
@@ -137,6 +139,7 @@
 	padding-bottom: 5%;
 	margin-top: 10%;
 	margin-left: 4%;
+	border-radius: 1%;
 }
 #background{
 	background-color: black;

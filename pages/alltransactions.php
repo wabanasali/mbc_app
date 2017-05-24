@@ -26,7 +26,7 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 			<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
 			<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-			<a id="logout_label" href="..//controller.php?set_session=log_out">LOGOUT</a>
+			<a id="logout_label" href="..//controller.php?set_session=log_out"><b>LOGOUT</b></a>
 		</div>
 	</header>
 	<div class="container-fluid" id="background">
@@ -101,8 +101,8 @@
 						 ?> 	FCFA
 						</b> (Available)</h5>
 						<div class="form-group" id="cash_in_cash_out_buttons">
-							<a href="operations.php"><button type="button" id="cash_in_button">Cash In</button></a>
-							<a href="mod_operations.php"><button type="button" id="cash_out_button">Cash Out</button></a>
+							<a href="operations.php"><button class="btn btn-default" type="button" id="cash_in_button">Cash In</button></a>
+							<a href="mod_operations.php"><button class="btn btn-default" type="button" id="cash_out_button">Cash Out</button></a>
 						</div>
 					</form>
 				</div>

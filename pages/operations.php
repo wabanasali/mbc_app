@@ -8,7 +8,6 @@
 	<link rel="stylesheet" type="text/css" href="..//css/bootstrap.min.css">
 	<link rel="stylesheet" href="..//css/style.css">
 	<script src="..//js/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="..//css/bootstrap.min.css">
 	<script>
 		function fetch_name(str) {
 		        if (str.length == 0) {
@@ -19,21 +18,6 @@
 		        xmlhttp.onreadystatechange = function() {
 		            if (this.readyState == 4 && this.status == 200) {
 		                document.getElementById("christian_name").value = this.responseText;
-		            }
-		        };
-		        xmlhttp.open("GET", "sp_controller.php?q=" + str, true);
-		        xmlhttp.send();
-		    }
-		}
-		function fetch_name1(str) {
-		        if (str.length == 0) {
-		        document.getElementById("christian_name1").value = "";
-		        return;
-		    } else {
-		        var xmlhttp = new XMLHttpRequest();
-		        xmlhttp.onreadystatechange = function() {
-		            if (this.readyState == 4 && this.status == 200) {
-		                document.getElementById("christian_name1").value = this.responseText;
 		            }
 		        };
 		        xmlhttp.open("GET", "sp_controller.php?q=" + str, true);
@@ -109,15 +93,16 @@
 				document.getElementById('christian_id').removeAttribute('required');
 				document.getElementById('christian_id_grp').setAttribute('hidden','true');
 				document.getElementById('christian_name_grp').setAttribute('hidden','true');
+				document.getElementById('comment').removeAttribute('required');
 			}
 			else if(optn == 'Others'){
 				document.getElementById('christian_id').removeAttribute('required');
 				document.getElementById('christian_id_grp').setAttribute('hidden','true');
 				document.getElementById('christian_name_grp').setAttribute('hidden','true');
 				document.getElementById('comment_grp').removeAttribute('hidden');
-				document.getElementById('comment').setAttribute('required', 'true');
+				// document.getElementById('comment').setAttribute('required', 'true');
 			}
-			else if (optn == 'Project') {
+			else if (optn == 'Project' || optn == 'Tithes') {
 				document.getElementById('christian_id').removeAttribute('required');
 				document.getElementById('christian_id_grp').removeAttribute('hidden');
 				document.getElementById('christian_name_grp').removeAttribute('hidden');
@@ -126,16 +111,6 @@
 			}
 			else{
 				window.location = '..//pages/operations.php';
-			}
-		}
-		function modified_view(){
-			var optn = document.getElementById('motif_out').value;
-			if (optn == 'Others') {
-				document.getElementById('comment_group_out').removeAttribute('hidden');
-				document.getElementById('comment_out').setAttribute('required');
-			}
-			else {
-				document.getElementById('comment_group_out').setAttribute('hidden', 'true');
 			}
 		}
 		function download_qreport(){
@@ -164,7 +139,7 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 			<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
 			<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-			<a id="logout_label" href="..//controller.php?set_session=log_out">LOGOUT</a>
+			<a id="logout_label" href="..//controller.php?set_session=log_out"><b>LOGOUT</b></a>
 		</div>
 	</header>
 	<div class="container-fluid" id="background">
@@ -224,7 +199,7 @@
 						<div class="form-group" id="comment_grp" hidden>
 								<label for="comment" class="col-sm-2 control-label">Comment</label>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" name="comment" id="comment">
+									<input type="text" class="form-control" name="comment" id="comment" required>
 								</div>
 							</div>
 						  <div class="form-group">
@@ -244,13 +219,14 @@
 						  </div>
 					</form>
 				</div>
+
 			<!-- here below is the annual report modal -->
 			<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h3 class="modal-title" id="lineModalLabel"></h3>
+						<h3 class="modal-title text-center" id="lineModalLabel">ANNUAL REPORT FORM</h3>
 					</div>
 					<div class="modal-body">
 						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
@@ -305,7 +281,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h3 class="modal-title" id="lineModalLabel"></h3>
+						<h3 class="modal-title text-center" id="lineModalLabel">QUATER REPORT FORM</h3>
 					</div>
 					<div class="modal-body">
 						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
@@ -379,10 +355,10 @@
 						</b> (Available)</h5>
 						<div class="form-group" id="cash_in_cash_out_buttons">
 							<!-- <button type="button" id="cash_in_button" onclick="download_qreport();">Q Report</button> -->
-							<button type="button" id="cash_in_button" data-toggle="modal" data-target="#squarespaceModal2">Q Report</button>
-							<button type="button" id="cash_out_button" data-toggle="modal" data-target="#squarespaceModal">A Report</button>
+							<button class="btn btn-default" type="button" id="cash_in_button" data-toggle="modal" data-target="#squarespaceModal2">Q Report</button>
+							<button class="btn btn-default" type="button" id="cash_out_button" data-toggle="modal" data-target="#squarespaceModal">A Report</button>
 						</div>
-						<div class="text-center" id="cash_in_hidder"><a href="mod_operations.php"><button id="go_to_cash_out_button">GO TO CASH OUT</button></a></div>
+						<div class="text-center" id="cash_in_hidder"><a href="mod_operations.php"><button class="btn btn-default" id="go_to_cash_out_button">GO TO CASH OUT</button></a></div>
 				</div>
 			</div>
 		</div>
@@ -391,6 +367,6 @@
 		
 	</footer>
 	<script src="..//js/bootstrap.min.js"></script>
-	<!-- <script src="..//js/some_trial.js"></script> -->
+	
 </body>
 </html>

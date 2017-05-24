@@ -67,7 +67,7 @@
 			}
 			elseif ($selection == 'Harvest') {
 				// echo "You selected harvest";
-				if (cash_in_htg($amount)) {
+				if (cash_in_htg($amount) == 0) {
 					header("Location:pages/operations.php?success_notification=sucess");
 				}
 				else{
@@ -76,23 +76,27 @@
 			}
 			elseif ($selection == 'Offerings') {
 				// echo "You selected offerings";
-				if (cash_in_offerings($amount)) {
+				if (cash_in_offerings($amount) == 0) {
 					header("Location:pages/operations.php?success_notification=sucess");
 				}
 				else
 					header("Location:pages/operations.php?fail_notification=fail");
 			}
-			else{
-				if (cash_in_sp_offerings($amount, $comment)) {
+			elseif ($selection == 'Others') {
+				if (cash_in_sp_offerings($amount, $comment) == 0) {
 					header("Location:pages/operations.php?success_notification=sucess");
 				}
 				else
+					var_dump("I am here now");
 					header("Location:pages/operations.php?fail_notification=fail");
+			}
+			else{
+
 			}
 		}
 		function cash_out($supplied_motif1, $supplied_executer_id, $supplied_executer_name, $supplied_executed_amount, $supplied_execution_comment){
 			if ($supplied_motif1 == 'Pastor Salary') {
-				if (cash_out_salary($supplied_executed_amount)) {
+				if (cash_out_salary($supplied_executed_amount) == 0) {
 					header("Location:pages/mod_operations.php?success_notification=sucess");
 				}
 				else
@@ -100,68 +104,35 @@
 					header("Location:pages/mod_operations.php?fail_notification=fail1");
 			}
 			elseif ($supplied_motif1 == 'Project') {
-				if (cash_out_project($supplied_executed_amount)) {
+				if (cash_out_project($supplied_executed_amount) == 0) {
 					header("Location:pages/mod_operations.php?success_notification=sucess");
 				}
 				else
 					header("Location:pages/mod_operations.php?fail_notification=fail2");
 			}
 			else{
-				if (cash_out_others($supplied_executed_amount, $supplied_execution_comment)) {
+				if (cash_out_others($supplied_executed_amount, $supplied_execution_comment) == 0) {
 					header("Location:pages/mod_operations.php?success_notification=sucess");
 				}
 				else
 					header("Location:pages/mod_operations.php?fail_notification=fail3");
 			}
 		}
+		
 		function available_balance()
 		{
 			return standing_balance();
 		}
-		function recent_statistics()
-		{
-			$stats_array = recent_transactions();
-			$stats_data = array();
-			 if($stats_array)
-			 {
-			 	foreach ($stats_array as $key => $value) 
-			 	{
-			 		if ($value != 0) {
-			 			if (strcmp($key, "expenses") == 0) {
-			 				array_push($stats_data, array('type' => 'CASH OUT', 'description' => 'EXPENDITURE', 'amount' => number_format($value)));
-			 			}
-			 			elseif (strcmp($key, "htg") == 0) {
-			 				array_push($stats_data, array('type' => 'CASH IN', 'description' => 'HTG INCOME', 'amount' => number_format($value)));
-			 			}
-			 			elseif (strcmp($key, "otherOfferings") == 0) {
-			 				array_push($stats_data, array('type' => 'CASH IN', 'description' => 'SPECIAL OFFERINGS', 'amount' => number_format($value)));
-			 			}
-			 			elseif (strcmp($key, "projects") == 0) {
-			 				array_push($stats_data, array('type' => 'CASH IN', 'description' => 'PROJECT OFFERINGS', 'amount' => number_format($value)));
-			 			}
-			 			elseif (strcmp($key, "regularOfferings") == 0) {
-			 				array_push($stats_data, array('type' => 'CASH IN', 'description' => 'REGULAR OFFERINGS', 'amount' => number_format($value)));
-			 			}
-			 			elseif (strcmp($key, "tithes") == 0) {
-			 				array_push($stats_data, array('type' => 'CASH IN', 'description' => 'TITHE COLLECTIONS', 'amount' => number_format($value)));
-			 			}
-			 		}
-			 		else
-			 		{
-			 			//do nothing
-			 		}
-			 	}
-			 	return $stats_data;
-			 }
-			 else
-			 {
-			 	return null;
-			 }
+		
+		function current_day_transactions(){
+			return day_transactions();
 		}
+
 		function grouped_statistics($from, $to)
 		{
 			return statistics_for_period($from, $to);
 		}
+		
 	if (!isset($_GET['set_session'])) {
 		//collect information from the login form
 		if (isset($_GET['todo1'])) {
@@ -183,6 +154,7 @@
 		else if (isset($_POST['todo3'])) {
 			if ($_POST['todo3'] == 'cash_in') {
 					$supplied_motif = trim(strip_tags($_POST['selection']));
+					$supplied_amount = trim(strip_tags($_POST['amount']));
 					if (isset($_POST['christian_id'])) {
 						$supplied_chrisian_id = trim(strip_tags($_POST['christian_id']));
 					}
@@ -191,8 +163,8 @@
 					if (isset($_POST['christian_name'])) {
 						$supplied_name = trim(strip_tags($_POST['christian_name']));
 					}
-					$supplied_name = '';
-					$supplied_amount = trim(strip_tags($_POST['amount']));
+					else
+						$supplied_name = '';
 					if (isset($_POST['comment'])) {
 						$supplied_comment = trim(strip_tags($_POST['comment']));
 					}
@@ -234,9 +206,30 @@
 			$supplied_year = trim(strip_tags($_POST['selected_fin_yr_id']));
 			header("Location: mc_quater_report.php");
 		}
+		elseif (isset($_POST['update_item'])) {
+			#get values to use for update
+			$supplied_tablename = trim(strip_tags($_POST['tableName']));
+			$supplied_id = trim(strip_tags($_POST['entryId']));
+			$supplied_new_amount = trim(strip_tags($_POST['new_amount']));
+			if (modify_record($supplied_tablename, $supplied_new_amount, $supplied_id) == 0) {
+				header("Location: pages/overviewtransactions.php?success_update");
+			}
+			else{
+				header("Location: pages/overviewtransactions.php?fail_update");
+			}
+		}
+		elseif (isset($_POST['delete_item'])) {
+			$supplied_tablename = trim(strip_tags($_POST['tableName2']));
+			$supplied_id = trim(strip_tags($_POST['entryId2']));
+			if (delete_record($supplied_tablename, $supplied_id) == 0) {
+				header("Location: pages/overviewtransactions.php?success_delete");
+			}
+			else{
+				header("Location: pages/overviewtransactions.php?fail_delete");
+			}
+		}
 		else{
-			$available_balance = available_balance();
-			$recent_stats = recent_statistics();	
+			$available_balance = available_balance();	
 		}
 	}
 	else{

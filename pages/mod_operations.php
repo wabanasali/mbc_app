@@ -10,21 +10,6 @@
 	<script src="..//js/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="..//css/bootstrap.min.css">
 	<script>
-		function fetch_name(str) {
-		        if (str.length == 0) {
-		        document.getElementById("christian_name").value = "";
-		        return;
-		    } else {
-		        var xmlhttp = new XMLHttpRequest();
-		        xmlhttp.onreadystatechange = function() {
-		            if (this.readyState == 4 && this.status == 200) {
-		                document.getElementById("christian_name").value = this.responseText;
-		            }
-		        };
-		        xmlhttp.open("GET", "sp_controller.php?q=" + str, true);
-		        xmlhttp.send();
-		    }
-		}
 		function fetch_name1(str) {
 		        if (str.length == 0) {
 		        document.getElementById("christian_name1").value = "";
@@ -103,39 +88,14 @@
 				alert('You must Select a quater between 1 and 4');	
 			}
 		}
-		function offerings_view(){
-			var optn = document.getElementById('motif').value;
-			if (optn == 'Harvest' || optn == 'Offerings') {
-				document.getElementById('christian_id').removeAttribute('required');
-				document.getElementById('christian_id_grp').setAttribute('hidden','true');
-				document.getElementById('christian_name_grp').setAttribute('hidden','true');
-			}
-			else if(optn == 'Others'){
-				document.getElementById('christian_id').removeAttribute('required');
-				document.getElementById('christian_id_grp').setAttribute('hidden','true');
-				document.getElementById('christian_name_grp').setAttribute('hidden','true');
-				document.getElementById('comment_grp').removeAttribute('hidden');
-				document.getElementById('comment').setAttribute('required', 'true');
-			}
-			else if (optn == 'Project') {
-				document.getElementById('christian_id').removeAttribute('required');
-				document.getElementById('christian_id_grp').removeAttribute('hidden');
-				document.getElementById('christian_name_grp').removeAttribute('hidden');
-				document.getElementById('comment_grp').setAttribute('hidden', 'true');
-				document.getElementById('comment').removeAttribute('required');
-			}
-			else{
-				window.location = '..//pages/operations.php';
-			}
-		}
 		function modified_view(){
 			var optn = document.getElementById('motif_out').value;
-			if (optn == 'Others') {
+			if(optn == 'Others'){
 				document.getElementById('comment_group_out').removeAttribute('hidden');
-				document.getElementById('comment_out').setAttribute('required');
+				document.getElementById('comment_out').setAttribute('required', 'true');
 			}
-			else {
-				document.getElementById('comment_group_out').setAttribute('hidden', 'true');
+			else{
+				window.location = '..//pages/mod_operations.php';
 			}
 		}
 		function download_qreport(){
@@ -189,7 +149,7 @@
 						<form class="form-horizontal" action="../controller.php?todo4=cash_out" role="form" method="POST">
 							<input type="hidden" name="todo4" value="cash_out" />
 							<div class="form-group">
-								<label for="motif" class="col-sm-2 control-label">Motif</label>
+								<label for="motif_out" class="col-sm-2 control-label">Motif</label>
 								<div class="col-sm-10">
 									<div class="select-style">
 										<select name="selection" id="motif_out" onchange="modified_view()">
@@ -224,7 +184,7 @@
 									<input type="text" name="executer_comment" class="form-control" id="comment_out">
 								</div>
 							</div>
-							  <div class="form-group">
+							<div class="form-group">
 							    <div class="col-sm-offset-4 col-sm-10">
 							      <button type="submit" class="btn btn-primary">Cash Out</button>
 							    </div>
@@ -375,10 +335,10 @@
 						 ?> FCFA
 						</b> (Available)</h5>
 						<div class="form-group" id="cash_in_cash_out_buttons">
-							<button type="button" id="cash_in_button" data-toggle="modal" data-target="#squarespaceModal2">Q Report</button>
-							<button type="button" id="cash_out_button" data-toggle="modal" data-target="#squarespaceModal">A Report</button>
+							<button class="btn btn-default" type="button" id="cash_in_button" data-toggle="modal" data-target="#squarespaceModal2">Q Report</button>
+							<button class="btn btn-default" type="button" id="cash_out_button" data-toggle="modal" data-target="#squarespaceModal">A Report</button>
 						</div>
-						<div class="text-center" id="cash_out_hidder"><a href="operations.php"><button id="go_to_cash_in_button">GO TO CASH IN</button></a></div>
+						<div class="text-center" id="cash_out_hidder"><a href="operations.php"><button class="btn btn-default" id="go_to_cash_in_button">GO TO CASH IN</button></a></div>
 				</div>
 			</div>
 		</div>

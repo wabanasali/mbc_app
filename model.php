@@ -82,6 +82,34 @@
 		else
 			return 'no such matricule';
 	}
+
+	function matricule_of_christian($id){
+		connect_to_db();
+		$christian_name_query = "SELECT matricule FROM christians WHERE id = '$id'";
+		$matricule_result = mysql_query($christian_name_query) or die('No such christian in the church DB');
+		$mat_array = mysql_fetch_array($matricule_result);
+		return $mat_array['matricule'];
+	}
+
+	function modify_record($db_table, $amount, $id){
+		$update_query = "UPDATE ".$db_table." SET amount = '$amount' WHERE id = '$id'";
+		if (mysql_query($update_query)) {
+		 	return 0;
+		 } 
+		else{
+			return -1;
+		}
+	}
+	function delete_record($db_table, $id){
+		$delete_query = "DELETE FROM ".$db_table." WHERE id = '$id'";
+		if (mysql_query($delete_query)) {
+			return 0;
+		}
+		else{
+			return -1;
+		}
+	}
+
 	function cash_in_tithes($christian_id, $amount){
 		//fetch christian id using christian_id/matricule
 		$connection = mysql_connect("localhost", "root", "");
@@ -140,7 +168,12 @@
 		$f_y_id_array = mysql_fetch_array($f_year_id_rslt);
 		$f_year_id = $f_y_id_array['f_year_id'];
 		$query = "INSERT INTO htg_offerings (amount, collected_on, u_id, f_year_id) VALUES ('$amount', '$collected_on', '$u_id', '$f_year_id')";
-		mysql_query($query) or die('could not insert into the htg_offerings table');
+		if (mysql_query($query)) {
+			return 0;
+		}
+		 else{
+		 	return -1;
+		 }
 	}
 	function cash_in_offerings($amount){
 		connect_to_db();
@@ -153,7 +186,12 @@
 		$u_id = $_SESSION['login_id'];
 		//year must be current
 		$query = "INSERT INTO regular_offerings (amount, collected_on, u_id, f_year_id) VALUES ('$amount', '$collected_on', '$u_id', '$f_year_id')";
-		mysql_query($query) or die('could not insert into the regular_offerings table');
+		if (mysql_query($query)) {
+			return 0;
+		}
+		else{
+			return -1;
+		}
 	}
 	function cash_in_sp_offerings($amount, $comment){
 		connect_to_db();
@@ -166,7 +204,13 @@
 		$u_id = $_SESSION['login_id'];
 		//year must be current
 		$query = "INSERT INTO other_offerings (amount, collected_on, purpose, u_id, f_year_id) VALUES ('$amount', '$collected_on', '$comment','$u_id', '$f_year_id')";
-		mysql_query($query) or die('could not insert into the regular_offerings table');
+		if (mysql_query($query)) {
+		 	return 0;
+		 } 
+		 else{
+		 	var_dump('What the crap');
+		 	return -1;
+		 }
 	}
 	//cash out operations
 	function cash_out_salary($amount){
@@ -182,6 +226,7 @@
 		//year must be current
 		$query = "INSERT INTO expenses (amount, purpose, withdrawn_on, u_id, f_year_id) VALUES ('$amount', '$purpose', '$withdrawn_on', '$u_id', '$f_year_id')";
 		mysql_query($query) or die('could not commit pastors salary in the expenses table');
+		return 0;
 	}
 	function cash_out_project($amount){
 		connect_to_db();
@@ -196,6 +241,7 @@
 		//year must be current
 		$query = "INSERT INTO expenses (amount, purpose, withdrawn_on, u_id, f_year_id) VALUES ('$amount', '$purpose', '$withdrawn_on', '$u_id', '$f_year_id')";
 		mysql_query($query) or die('could not commit project expenses in the expenses table');
+		return 0;
 	}
 	function cash_out_others($amount, $purpose){
 		connect_to_db();
@@ -209,6 +255,7 @@
 		//year must be current
 		$query = "INSERT INTO expenses (amount, purpose, withdrawn_on, u_id, f_year_id) VALUES ('$amount', '$purpose', '$withdrawn_on', '$u_id', '$f_year_id')";
 		mysql_query($query) or die('could not commit other expenses in the expenses table');
+		return 0;
 	}
 	//totals
 	function total_project_offerings(){
@@ -317,46 +364,6 @@
 		return cash_in_till_date() - cash_out_till_date();
 	}
 	//Report queries from here on
-	//checking for recent transactions to show; according to date, show SN, Type, motive(grouped), amount involved
-	function recent_transactions(){
-		connect_to_db();
-		$today_date = date('Y-m-d H:i:s');
-		$total_count = 0;
-		$expenses = 0;
-		$htg = 0;
-		$otherOfferings = 0;
-		$projects = 0;
-		$regularOfferings = 0;
-		$tithes = 0;
-		$dayStatistics = array("expenses" => $expenses, "htg" => $htg, "otherOfferings" => $otherOfferings, "projects" => $projects, "regularOfferings" => $regularOfferings, "tithes" => $tithes);
-		//for current year
-		$query = "SELECT * FROM daystatistics1";
-		$result = mysql_query($query);
-		$nbr_rows = mysql_num_rows($result);
-		if ($nbr_rows == 1)
-		 {
-			$row = mysql_fetch_array($result);
-			if (isset($row[0])) {
-				$dayStatistics['expenses'] = $row[0];
-			}
-			if (isset($row[1])) {
-				$dayStatistics['htg'] = $row[1];
-			}
-			if (isset($row[2])) {
-				$dayStatistics['otherOfferings'] = $row[2];
-			}
-			if (isset($row[3])) {
-				$dayStatistics['projects'] = $row[3];
-			}
-			if (isset($row[4])) {
-				$dayStatistics['regularOfferings'] = $row[4];
-			}
-			if (isset($row[5])) {
-				$dayStatistics['tithes'] = $row[5];
-			}
-			return $dayStatistics;
-		}
-	}
 	//pending problem is that of getting the totals as per the dates
 	function statistics_for_period($start_date, $end_date)
 	{
@@ -446,6 +453,105 @@
 			}
 		}
 		return $statistics_mult_array;
+	}
+	//The function here after generates today records
+	function day_transactions()
+	{
+		connect_to_db();
+		$amount = 0;
+		$todayDate = date('Y-m-d');
+		$id = 0;
+		$description = '';
+		$type_of_operation = '';
+		$db_table = '';
+		$today_mult_array = array();
+		$today_ass_array = array('db_table' => $db_table, 'id' => $id, 'amount' => $amount, 'description' => $description, 'type_of_operation' => $type_of_operation);
+		
+		$exp_query = "SELECT id, amount, purpose FROM expenses WHERE date_format(withdrawn_on,'%Y-%m-%d') = '$todayDate'";
+		$exp_result = mysql_query($exp_query);
+		$exp_rows = mysql_num_rows($exp_result);
+		if ($exp_rows > 0) {
+			while ($exp_row_data = mysql_fetch_array($exp_result)) {
+				$today_ass_array['db_table'] = 'expenses';
+				$today_ass_array['id'] = $exp_row_data['id'];
+				$today_ass_array['amount'] = number_format($exp_row_data['amount']);
+				$today_ass_array['description'] = $exp_row_data['purpose'];
+				$today_ass_array['type_of_operation'] = 'CASH OUT';
+				array_push($today_mult_array, $today_ass_array);
+			}	
+		}
+
+		$tithes_query = "SELECT id, amount, c_id FROM tithes WHERE date_format(paid_on, '%Y-%m-%d') = '$todayDate'";
+		$tithes_result = mysql_query($tithes_query);
+		$tithes_rows = mysql_num_rows($tithes_result);
+		if ($tithes_rows > 0) {
+			while ($tithes_row_data = mysql_fetch_array($tithes_result)) {
+				$today_ass_array['db_table'] = 'tithes';
+				$today_ass_array['id'] = $tithes_row_data['id'];
+				$today_ass_array['amount'] = number_format($tithes_row_data['amount']);
+				$today_ass_array['description'] = 'tithes for '.matricule_of_christian($tithes_row_data['c_id']);
+				$today_ass_array['type_of_operation'] = 'CASH IN';
+				array_push($today_mult_array, $today_ass_array);
+			}
+		}
+		
+		$htg_query = "SELECT id, amount FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') =  '$todayDate'";
+		$htg_result = mysql_query($htg_query);
+		$htg_rows = mysql_num_rows($htg_result);
+		if ($htg_rows > 0) {
+			while ($htg_row_data = mysql_fetch_array($htg_result)) {
+				$today_ass_array['db_table'] = 'htg_offerings';
+				$today_ass_array['id'] = $htg_row_data['id'];
+				$today_ass_array['amount'] = number_format($htg_row_data['amount']);
+				$today_ass_array['description'] = 'Total HTG for Today';
+				$today_ass_array['type_of_operation'] = 'CASH IN';
+				array_push($today_mult_array, $today_ass_array);
+			}
+		}
+
+		$other_off_query = "SELECT id, amount FROM other_offerings WHERE date_format(collected_on, '%Y-%m-%d') = '$todayDate'";
+		$other_off_result = mysql_query($other_off_query);
+		$other_off_rows = mysql_num_rows($other_off_result);
+		if ($other_off_rows > 0) {
+			while ($other_off_row_data = mysql_fetch_array($other_off_result)) {
+				$today_ass_array['db_table'] = 'other_offerings';
+				$today_ass_array['id'] = $other_off_row_data['id'];
+				$today_ass_array['amount'] = number_format($other_off_row_data['amount']);
+				$today_ass_array['description'] = 'Total Other Offerings for Today';
+				$today_ass_array['type_of_operation'] = 'CASH IN';
+				array_push($today_mult_array, $today_ass_array);
+			}
+		}
+
+		$project_query = "SELECT id, amount, c_id FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') = '$todayDate'";
+		$project_result = mysql_query($project_query);
+		$project_rows = mysql_num_rows($project_result);
+		if ($project_rows > 0) {
+			while ($project_row_data = mysql_fetch_array($project_result)) {
+				$today_ass_array['db_table'] = 'project_offerings';
+				$today_ass_array['id'] = $project_row_data['id'];
+				$today_ass_array['amount'] = number_format($project_row_data['amount']);
+				$today_ass_array['description'] = 'Project Offerings for '.matricule_of_christian($project_row_data['c_id']);
+				$today_ass_array['type_of_operation'] = 'CASH IN';
+				array_push($today_mult_array, $today_ass_array);
+			}
+		}
+		
+		$reg_off_query = "SELECT id, amount FROM regular_offerings WHERE date_format(collected_on, '%Y-%m-%d') = '$todayDate'";
+		$reg_off_result = mysql_query($reg_off_query);
+		$reg_off_rows = mysql_num_rows($reg_off_result);
+		if ($reg_off_rows > 0) {
+			while ($reg_off_row_data = mysql_fetch_array($reg_off_result)) {
+				$today_ass_array['db_table'] = 'regular_offerings';
+				$today_ass_array['id'] = $reg_off_row_data['id'];
+				$today_ass_array['amount'] = number_format($reg_off_row_data['amount']);
+				$today_ass_array['description'] = 'Worship Service Offerings for Today';
+				$today_ass_array['type_of_operation'] = 'CASH IN';
+				array_push($today_mult_array, $today_ass_array);
+			}
+		}
+
+		return $today_mult_array;
 	}
 	//The function here after generates the quaterly totals for incomes
 	function quater_income_per_rubric_totals($start_date, $end_date){
