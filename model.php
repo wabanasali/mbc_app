@@ -68,7 +68,13 @@
 			return 0;
 		}
 	}
-
+	function upload_file($arg1, $arg2, $arg3){
+		connect_to_db();
+		$dateofbaptism = date('Y-m-d H:i:s');
+		$insert_query = "INSERT INTO christians (name, baptised_on, matricule, f_year_id) VALUES ('$arg1','$dateofbaptism', '$arg2
+		', $arg3)";
+		$insert_result = mysql_query($insert_query) or die('Could not insert data into Christians Table');
+	}
 	function christian($christian_id){
 		$connection = mysql_connect("localhost", "root", "");
 		$db = mysql_select_db('mbc', $connection) or die('could not select database');

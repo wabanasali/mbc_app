@@ -104,8 +104,8 @@
 											<td hidden id='targetted_table'>".$today_statistics[$i]['db_table']."</td>
 											<td hidden id='targetted_id'>".$today_statistics[$i]['id']."</td>
 											<td>
-											<a href='#squarespaceModal' data-toggle='modal' class='open-AddBookDialog' data-id='$data_id' data-db_table='$data_table' data-amount='$data_amount' data-purpose='$data_purpose'><span class='glyphicon glyphicon-pencil'>EDIT<span></a>
-											<a href='#squarespaceModal2' data-toggle='modal' class='open-AddBookDialog' data-id2='$data_id' data-db_table2='$data_table' data-amount2='$data_amount' data-purpose2='$data_purpose'><span class='glyphicon glyphicon-remove'>DELETE</span></a></td>
+											<a href='#squarespaceModal' data-toggle='modal' class='open-AddBookDialog' data-id='$data_id' data-db_table='$data_table' data-amount='$data_amount' data-purpose='$data_purpose'><img src='..//images/edit_icon.png'>EDIT</a>
+											<a href='#squarespaceModal2' data-toggle='modal' class='open-AddBookDialog' data-id2='$data_id' data-db_table2='$data_table' data-amount2='$data_amount' data-purpose2='$data_purpose'><img src='..//images/delete_icon.png'>DELETE</a></td>
 										  </tr>";
 								  }
 							echo "</table>";
@@ -291,7 +291,6 @@
 							<a href="operations.php"><button class="btn btn-default" type="button" id="cash_in_button">Cash In</button></a>
 							<a href="mod_operations.php"><button class="btn btn-default" type="button" id="cash_out_button">Cash Out</button></a>
 						</div>
-						<!-- <div class="text-center" id="info_update"><a href="#squarespaceModal" data-toggle='modal'><button class="btn btn-default" id="go_to_cash_out_button">MODIFY ENTRY</button></a></div> -->
 					</form>
 				</div>
 			</div>

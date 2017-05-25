@@ -228,6 +228,24 @@
 				header("Location: pages/overviewtransactions.php?fail_delete");
 			}
 		}
+		elseif (isset($_POST['upload_item'])) {
+			$filename = $_FILES['file']['tmp_name'];
+			$filesize = $_FILES['file']['size'];
+			$data = array();
+			if ($filesize > 0) {
+				$myfile = fopen($filename, "r");
+				while (($emapData = fgetcsv($myfile, 10000, ",")) !== false) {
+					$data[] = $emapData;
+				}
+				for ($i=0; $i < sizeof($data); $i++) { 
+					upload_file($data[$i][0], $data[$i][1], intval($data[$i][2]));
+				}
+				header("Location: pages/operations.php?success_upload");
+			}
+			else{
+				header("Location: pages/operations.php?fail_upload");
+			}
+		}
 		else{
 			$available_balance = available_balance();	
 		}

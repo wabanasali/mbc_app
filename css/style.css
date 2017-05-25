@@ -10,6 +10,18 @@
 	padding-right: 15px;
 	padding-bottom: 30px;
 }
+.img_div{
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+/*#edit_icon{
+	padding-left: 2px;
+	padding-right: 2px;
+}
+#delete_icon{
+	padding-left: 2px;
+	padding-right: 2px;
+}*/
 #church_logo{
 	padding-bottom: 5px;
 }
