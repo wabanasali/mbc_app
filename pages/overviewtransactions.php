@@ -77,8 +77,9 @@
 			<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 				<div class="container-fluid" id="overview_statistics_area">
 					<h4 class="text-center">SUMMARY OF TODAY'S TRANSACTIONS</h4>
-					<p class="text-center">
-					<?php 
+					<!-- <p class="text-center"> -->
+					<div class="table-responsive">
+						<?php 
 						$today_statistics = current_day_transactions();
 						$j = 0;
 						if ($today_statistics) {
@@ -88,6 +89,7 @@
 									<td>TYPE</td>
 									<td>DESCRIPTION</td>
 									<td>AMOUNT</td>
+									<td></td>
 								  </tr>";
 								  for ($i=0; $i < sizeof($today_statistics); $i++) 
 								  { 
@@ -104,7 +106,7 @@
 											<td hidden id='targetted_table'>".$today_statistics[$i]['db_table']."</td>
 											<td hidden id='targetted_id'>".$today_statistics[$i]['id']."</td>
 											<td>
-											<a href='#squarespaceModal' data-toggle='modal' class='open-AddBookDialog' data-id='$data_id' data-db_table='$data_table' data-amount='$data_amount' data-purpose='$data_purpose'><img src='..//images/edit_icon.png'>EDIT</a>
+											<a href='#squarespaceModal' data-toggle='modal' class='open-AddBookDialog' data-id='$data_id' data-db_table='$data_table' data-amount='$data_amount' data-purpose='$data_purpose'><img src='..//images/edit_icon.png'><span id=''>EDIT</span></a>
 											<a href='#squarespaceModal2' data-toggle='modal' class='open-AddBookDialog' data-id2='$data_id' data-db_table2='$data_table' data-amount2='$data_amount' data-purpose2='$data_purpose'><img src='..//images/delete_icon.png'>DELETE</a></td>
 										  </tr>";
 								  }
@@ -113,10 +115,11 @@
 						}
 						else
 						{
-							echo "There are no recent transactions";
+							echo "<p class='text-center'>There are no recent transactions</p>";
 						}
-					 ?>	
-					 </p>
+					 ?>
+					</div>	
+					<!-- </p> -->
 					 <div id="successful_update">
 						  		<?php
 						  			if (isset($_GET['success_update'])) {

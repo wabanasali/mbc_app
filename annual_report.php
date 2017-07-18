@@ -97,7 +97,7 @@ elseif ($qtr == 3) {
 	$pdf->Output('D','ThirdQuaterFinancialReport.pdf');
 }
 elseif ($qtr == 4) {
-	$pdf->Output('D','FinalQuaterFinancialReport.pdf');
+	$pdf->Output('I','FinalQuaterFinancialReport.pdf');
 }
 // header("location: pages/operations.php");
 ?>		

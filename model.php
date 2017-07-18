@@ -71,8 +71,8 @@
 	function upload_file($arg1, $arg2, $arg3){
 		connect_to_db();
 		$dateofbaptism = date('Y-m-d H:i:s');
-		$insert_query = "INSERT INTO christians (name, baptised_on, matricule, f_year_id) VALUES ('$arg1','$dateofbaptism', '$arg2
-		', $arg3)";
+		$insert_query = "INSERT INTO christians (name, baptised_on, matricule, f_year_id) VALUES ('$arg1','$dateofbaptism', '$arg2', '$arg3')";
+		var_dump($insert_query);
 		$insert_result = mysql_query($insert_query) or die('Could not insert data into Christians Table');
 	}
 	function christian($christian_id){
@@ -395,7 +395,7 @@
 			}	
 		}
 		// $tithes_query = "SELECT sum(amount) AS amount, paid_on FROM tithes WHERE paid_on BETWEEN '$start_date' AND '$end_date' GROUP BY paid_on";
-		$tithes_query = "SELECT sum(amount) AS amount, paid_on FROM tithes WHERE date_format(paid_on, '%Y-%m-%d') >= '$start_date' AND date_format(paid_on, '%Y-%m-%d') <='$end_date' GROUP BY paid_on";
+		$tithes_query = "SELECT sum(amount) AS amount, paid_on FROM tithes WHERE date_format(paid_on, '%Y-%m-%d') >= '$start_date' AND date_format(paid_on, '%Y-%m-%d') <='$end_date'";
 		$tithes_result = mysql_query($tithes_query);
 		$tithes_rows = mysql_num_rows($tithes_result);
 		if ($tithes_rows > 0) {
@@ -408,7 +408,7 @@
 			}
 		}
 		// $htg_query = "SELECT sum(amount) AS amount, collected_on FROM htg_offerings WHERE collected_on BETWEEN '$start_date' AND '$end_date' GROUP BY collected_on";
-		$htg_query = "SELECT sum(amount) AS amount, collected_on FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') >=  '$start_date' AND date_format(collected_on, '%Y-%m-%d') <='$end_date' GROUP BY collected_on";
+		$htg_query = "SELECT sum(amount) AS amount, collected_on FROM htg_offerings WHERE date_format(collected_on, '%Y-%m-%d') >=  '$start_date' AND date_format(collected_on, '%Y-%m-%d') <='$end_date'";
 		$htg_result = mysql_query($htg_query);
 		$htg_rows = mysql_num_rows($htg_result);
 		if ($htg_rows > 0) {
@@ -420,7 +420,7 @@
 				array_push($statistics_mult_array, $statistics_ass_array);
 			}
 		}
-		$other_off_query = "SELECT amount, collected_on FROM other_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <='$end_date'";
+		$other_off_query = "SELECT sum(amount) AS amount, collected_on FROM other_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <='$end_date'";
 		$other_off_result = mysql_query($other_off_query);
 		$other_off_rows = mysql_num_rows($other_off_result);
 		if ($other_off_rows > 0) {
@@ -433,7 +433,7 @@
 			}
 		}
 
-		$project_query = "SELECT sum(amount) AS amount, collected_on FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date' GROUP BY collected_on";
+		$project_query = "SELECT sum(amount) AS amount, collected_on FROM project_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
 		$project_result = mysql_query($project_query);
 		$project_rows = mysql_num_rows($project_result);
 		if ($project_rows > 0) {
@@ -446,7 +446,7 @@
 			}
 		}
 		
-		$reg_off_query = "SELECT sum(amount) AS amount, collected_on FROM regular_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date' GROUP BY collected_on";
+		$reg_off_query = "SELECT sum(amount) AS amount, collected_on FROM regular_offerings WHERE date_format(collected_on, '%Y-%m-%d') >= '$start_date' AND date_format(collected_on, '%Y-%m-%d') <= '$end_date'";
 		$reg_off_result = mysql_query($reg_off_query);
 		$reg_off_rows = mysql_num_rows($reg_off_result);
 		if ($reg_off_rows > 0) {

@@ -187,18 +187,31 @@
 				cash_out($supplied_motif1, $supplied_executer_id, $supplied_executer_name, $supplied_executed_amount, $supplied_execution_comment);
 			}
 		}
+		//generating monthly report
+		elseif (isset($_POST['mreport'])) {
+			$supplied_year = trim(strip_tags($_POST['selected_fin_yr_id2']));
+			$supplied_month = trim(strip_tags($_POST['selected_month']));
+			//this is for income
+			// header("Location: monthly_income/monthly_inc.php?f_year_id=$supplied_year&abr_month=$supplied_month");
+			//this is for expenditure
+			header("Location: monthly_expenditure/monthly_exp.php?f_year_id=$supplied_year&abr_month=$supplied_month");
+			// echo "Month: ".$supplied_month." Year: ".$supplied_year;
+		}
+		//generating quaterly report
 		elseif (isset($_POST['qreport'])) {
 			# check if it is current year or an already past year, cause printing and redirect to operations page
 			if ($_POST['qreport'] == 'quater_report') {
-				$supplied_year = trim(strip_tags($_POST['selected_fin_yr_id2']));
+				$supplied_year_id = trim(strip_tags($_POST['selected_fin_yr_qtr']));
 				$supplied_quater = trim(strip_tags($_POST['selected_quater']));
-				if ($supplied_quater == 0) {
-					header("Location: quater_report.php");
-				}
-				else{
-					header("Location: quater_report.php");
-				}
+				// echo "Year: ".$supplied_year." Quater: ".$supplied_quater;
+				// if ($supplied_quater == 0) {
+				// 	header("Location: quater_report.php");
+				// }
+				// else{
+				// 	header("Location: quater_report.php");
+				// }
 				// echo "Wonder ful palava";
+				header("Location: quaterly_inc/quaterly_inc.php?quater=$supplied_quater&f_year_id=$supplied_year_id");
 			}
 		}
 		elseif (isset($_POST['areport'])) {
@@ -238,6 +251,7 @@
 					$data[] = $emapData;
 				}
 				for ($i=0; $i < sizeof($data); $i++) { 
+					// var_dump($data[$i][0].':'.$data[$i][1].':'.$data[$i][2])
 					upload_file($data[$i][0], $data[$i][1], intval($data[$i][2]));
 				}
 				header("Location: pages/operations.php?success_upload");

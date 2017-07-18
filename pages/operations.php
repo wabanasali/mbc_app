@@ -8,115 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="..//css/bootstrap.min.css">
 	<link rel="stylesheet" href="..//css/style.css">
 	<script src="..//js/jquery.min.js"></script>
-	<script>
-		function fetch_name(str) {
-		        if (str.length == 0) {
-		        document.getElementById("christian_name").value = "";
-		        return;
-		    } else {
-		        var xmlhttp = new XMLHttpRequest();
-		        xmlhttp.onreadystatechange = function() {
-		            if (this.readyState == 4 && this.status == 200) {
-		                document.getElementById("christian_name").value = this.responseText;
-		            }
-		        };
-		        xmlhttp.open("GET", "sp_controller.php?q=" + str, true);
-		        xmlhttp.send();
-		    }
-		}
-		function update_rpt_notification(){
-			var mzg = document.getElementById('fin_year_id').value;
-			var dateOfToday = new Date();
-			var yearOfToday = dateOfToday.getFullYear();
-			if (mzg != 0) {
-				//check if it is the current year in order to know how to proceed with the download
-				document.getElementById('saveImage').disabled = false;
-				document.getElementById('anual_rpt_notification').innerHTML = 'YOU ARE NOW ABOUT TO PRINT FINANCIAL REPORT FOR THE YEAR '+mzg;
-				document.getElementById('anual_rpt_notification').style.color = "blue";
-				// document.getElementById().disabled = true;
-			}
-		}
-		function update_rpt_notification2(){
-			var mzg = document.getElementById('fin_year_id2').value;
-			//check for year if it is not current year
-			var todayDate = new Date();
-			var year = todayDate.getFullYear();
-			var month = todayDate.getMonth();
-			if (mzg != year) {
-				//the year is not the current year so we go the year in question
-				document.getElementById('hidden_select_div').removeAttribute('hidden');
-				
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT QUATER FINANCIAL REPORT FOR THE YEAR '+mzg;
-				document.getElementById('anual_rpt_notification2').style.color = "blue";
-			}
-			else{
-				//it is the current year
-				document.getElementById('saveImage2').disabled = false;
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT QUATER FINANCIAL REPORT FOR THE YEAR '+mzg;
-				document.getElementById('anual_rpt_notification2').style.color = "blue";
-				//remove disabled property
-			}
-		}
-		function update_rpt_notification3(){
-			var desired_quater = document.getElementById('selected_quater_id').value;
-			var year = document.getElementById('fin_year_id2').value;
-			if (desired_quater == 1) {
-				document.getElementById('saveImage2').disabled = false;
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 1ST QUATER FINANCIAL REPORT FOR THE YEAR '+year ;
-				document.getElementById('anual_rpt_notification2').style.color = "blue";
-			}
-			else if (desired_quater == 2) {
-				document.getElementById('saveImage2').disabled = false;
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 2ND QUATER FINANCIAL REPORT FOR THE YEAR '+year;
-				document.getElementById('anual_rpt_notification2').style.color = "blue";
-				//remove disabled property
-			}
-			else if (desired_quater == 3) {
-				document.getElementById('saveImage2').disabled = false;
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 3RD QUATER FINANCIAL REPORT FOR THE YEAR '+year;
-				document.getElementById('anual_rpt_notification2').style.color = "blue";
-				//remove disabled property
-			}
-			else if (desired_quater == 4) {
-				document.getElementById('saveImage2').disabled = false;
-				document.getElementById('anual_rpt_notification2').innerHTML = 'YOU ARE NOW ABOUT TO PRINT 4TH QUATER FINANCIAL REPORT FOR THE YEAR '+year;
-				document.getElementById('anual_rpt_notification2').style.color = "blue";
-				//remove disabled proper
-			}
-			else{
-				alert('You must Select a quater between 1 and 4');	
-			}
-		}
-		function offerings_view(){
-			var optn = document.getElementById('motif').value;
-			if (optn == 'Harvest' || optn == 'Offerings') {
-				document.getElementById('christian_id').removeAttribute('required');
-				document.getElementById('christian_id_grp').setAttribute('hidden','true');
-				document.getElementById('christian_name_grp').setAttribute('hidden','true');
-				document.getElementById('comment').removeAttribute('required');
-			}
-			else if(optn == 'Others'){
-				document.getElementById('christian_id').removeAttribute('required');
-				document.getElementById('christian_id_grp').setAttribute('hidden','true');
-				document.getElementById('christian_name_grp').setAttribute('hidden','true');
-				document.getElementById('comment_grp').removeAttribute('hidden');
-				// document.getElementById('comment').setAttribute('required', 'true');
-			}
-			else if (optn == 'Project' || optn == 'Tithes') {
-				document.getElementById('christian_id').removeAttribute('required');
-				document.getElementById('christian_id_grp').removeAttribute('hidden');
-				document.getElementById('christian_name_grp').removeAttribute('hidden');
-				document.getElementById('comment_grp').setAttribute('hidden', 'true');
-				document.getElementById('comment').removeAttribute('required');
-			}
-			else{
-				window.location = '..//pages/operations.php';
-			}
-		}
-		function download_qreport(){
-			//need to take year and quater as argument as argument
-			window.location.href = 'http://localhost/MBC/quater_report.php';
-		}
+   <script src="../js/custom_js.js">
    </script>
 </head>
 <body>
@@ -181,7 +73,8 @@
 						<div class="form-group" id="christian_id_grp">
 							<label for="christian_id" class="col-sm-2 control-label">Christian ID</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" name="christian_id" id="christian_id" onkeyup="fetch_name(this.value)" required>
+								<input type="text" class="form-control" name="christian_id" id="christian_id"  required>
+								<!-- onkeyup="fetch_name(this.value)" -->
 							</div>
 						</div>
 						<div class="form-group" id="christian_name_grp">
@@ -199,7 +92,7 @@
 						<div class="form-group" id="comment_grp" hidden>
 								<label for="comment" class="col-sm-2 control-label">Comment</label>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" name="comment" id="comment" required>
+									<input type="text" class="form-control" name="comment" id="comment">
 								</div>
 							</div>
 						  <div class="form-group">
@@ -217,178 +110,19 @@
 						  			}
 						  		?>
 						  </div>
+						  <p id="testing"></p>
 					</form>
 				</div>
-			<!-- upload file modal starts -->
-				<div class="modal fade" id="squarespaceModal3" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			  		<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">
-									<span aria-hidden="true">×</span>
-									<span class="sr-only">Close</span>
-								</button>
-								<h3 class="modal-title text-center" id="lineModalLabel">CHRISTIANS UPLOAD FORM</h3>
-							</div>
-							<div class="modal-body">
-								<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
-								<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-								<form class="form-horizontal" action="../controller.php?upload_item=upload_item_value" role="form" method="POST" enctype="multipart/form-data">
-									<input type="hidden" name="upload_item" value="upload_item_value"/>
-									<div class="form-group">
-										<p class="text-center edit_data_notification" id="notification3">
-											YOU ARE ABOUT TO UPLOAD LIST OF CHRISTIANS
-										</p>
-									</div>
-									<div class="form-group">
-										<div class="col-sm-6">
-											<input type="file" name="file" id="file" class="input-large">
-										</div>
-									</div>
-									<div class="btn-group btn-group-justified" role="group" aria-label="group button">
-										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
-										</div>
-										<div class="btn-group btn-delete hidden" role="group">
-											<button type="button" id="delImage3" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
-										</div>
-										<div class="btn-group" role="group">
-											<button type="submit" id="saveImage3" class="btn btn-primary btn-hover-green" data-action="save" role="button" data-loading-text="Loading ...">Upload</button>
-										</div>
-									</div>
-				            	</form>
-							</div>
-							<div class="modal-footer">
-								<p class="text-center">Powered By @Theophilus</p>
-							</div>
-						</div>
-			  		</div>
-				</div>
-			<!-- upload file modal ends -->
-			<!-- here below is the annual report modal -->
-			<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h3 class="modal-title text-center" id="lineModalLabel">ANNUAL REPORT FORM</h3>
-					</div>
-					<div class="modal-body">
-						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
-						<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-						<form class="form-horizontal" action="../controller.php?areport=annual_report" role="form" method="POST">
-						<input type="hidden" name="areport" value="annual_report"/>
-			              <div class="form-group">
-							<label for="motif" class="col-sm-6 control-label">FINANCIAL YEAR</label>
-								<div class="col-sm-6">
-									<div class="select-style">
-										<select name="selected_fin_yr_id" id="fin_year_id" onchange="update_rpt_notification()">
-											<?php 
-												$fin_year_info = get_financial_year();
-												echo $fin_year_info;
-											?>
-											<option value="0">Choose</option>
-											<?php
-												foreach ($fin_year_info as $key => $value) {
-													echo "<option value='".$value['f_year']."'>".$value['f_year']."</option>";			
-												}
-											?>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<p class="text-center anual_rpt_notification" id="anual_rpt_notification">PLEASE CHOOSE THE YEAR WHOSE FINANCIAL REPORT IS DESIRED</p>
-							</div>
-							<div class="btn-group btn-group-justified" role="group" aria-label="group button">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
-							</div>
-							<div class="btn-group btn-delete hidden" role="group">
-								<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
-							</div>
-							<div class="btn-group" role="group" disabled>
-								<button type="submit" id="saveImage" class="btn btn-primary btn-hover-green" data-action="save" role="button" disabled>Print</button>
-							</div>
-						</div>
-			            </form>
-
-					</div>
-					<div class="modal-footer">
-						<p class="text-center">Powered By @Theophilus</p>
-					</div>
-				</div>
-			  </div>
-			</div>
-			<!-- here below is the quater report modal -->
-			<div class="modal fade" id="squarespaceModal2" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h3 class="modal-title text-center" id="lineModalLabel">QUATER REPORT FORM</h3>
-					</div>
-					<div class="modal-body">
-						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
-						<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-						<form class="form-horizontal" action="../controller.php?qreport=quater_report" role="form" method="POST">
-						<input type="hidden" name="qreport" value="quater_report"/>
-			              <div class="form-group">
-							<label for="motif" class="col-sm-6 control-label">FINANCIAL YEAR</label>
-								<div class="col-sm-6">
-									<div class="select-style">
-										<select name="selected_fin_yr_id2" id="fin_year_id2" onchange="update_rpt_notification2()" required>
-											<?php 
-												$fin_year_info = get_financial_year();
-												// echo $fin_year_info;
-											?>
-											<option value="0">Choose</option>
-											<?php
-												foreach ($fin_year_info as $key => $value) {
-													echo "<option value='".$value['f_year']."'>".$value['f_year']."</option>";			
-												}
-											?>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="form-group" id="hidden_select_div" hidden>
-								<label for="motif" class="col-sm-6 control-label">QUATER OF YEAR</label>
-								<div class="col-sm-6">
-									<div class="select-style">
-										<select name="selected_quater" id="selected_quater_id" onchange="update_rpt_notification3()" required>
-											<option value="0">Choose</option>
-											<option value="1">1st QUATER</option>
-											<option value="2">2nd QUATER</option>
-											<option value="3">3rd QUATER</option>
-											<option value="4">4th QUATER</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<p class="text-center anual_rpt_notification" id="anual_rpt_notification2">PLEASE CHOOSE THE YEAR WHOSE QUATER FINANCIAL REPORT IS DESIRED</p>
-							</div>
-							<div class="btn-group btn-group-justified" role="group" aria-label="group button">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
-							</div>
-							<div class="btn-group btn-delete hidden" role="group">
-								<button type="buttonl" id="delImage2" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
-							</div>
-							<div class="btn-group" role="group" disabled>
-								<button type="submit" id="saveImage2" class="btn btn-primary btn-hover-green" data-action="save" role="button" disabled>Print</button>
-							</div>
-						</div>
-			          </form>
-
-					</div>
-					<div class="modal-footer">
-						<p class="text-center">Powered By @Theophilus</p>
-					</div>
-				</div>
-			  </div>
-			</div>
+			<?php 
+				//monthly report modal 
+				include "sub_pages/monthly_modal.inc";
+				//upload file modal
+				include "sub_pages/upload_modal.inc";
+				//annual report modal
+				include "sub_pages/annual_modal.inc";
+				//quater report modal
+				include "sub_pages/quaterly_modal.inc";
+			?>
 		</div>
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 				<div class="container-fluid" id="cash_in_cash_out_form">
@@ -409,7 +143,14 @@
 							</a>
 						</div>
 						<div class="text-center" id="">
-							<a href="#squarespaceModal3" data-toggle="modal">UPLOAD FILE</a>
+							<a href="#squarespaceModal3" data-toggle="modal"><b>UPLOAD FILE</b></a>
+							<b>|</b>
+							<a href="#squarespaceModal4" data-toggle="modal"><b>MONTHLY_REPORT</b></a>
+							<?php 
+								if (isset($_GET['feedback'])) {
+									echo "<br><b>NO DATA AVAILABLE</b>";
+								}
+							?>
 						</div>
 						<div>
 							<?php
@@ -429,5 +170,15 @@
 		
 	</footer>
 	<script src="..//js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$('input#christian_id').keyup(function(e){
+			var christian_matricule = $('#christian_id').val();
+			if (christian_matricule.length !== 0) {
+				$.post('sp_controller1.php', {matricule:christian_matricule},function(data){
+					$('#christian_name').val(data);
+				});
+			}
+		});
+	</script>
 </body>
 </html>

@@ -28,7 +28,11 @@ $logoFile = "widget-company-logo.png";
 $logoXPos = 50;
 $logoYPos = 108;
 $logoWidth = 110;
-$columnLabels = array( "Q1", "Q2", "Q3", "Q4" );
+//Month with four weeks
+$columnLabels = array( "WK1", "WK2", "WK3", "WK4" );
+//Month with five weeks
+$columnLabels2 = array( "WK1", "WK2", "WK3", "WK4", "WK5" );
+//count row labels and put in the array that
 $rowLabels = array( "SupaWidget", "WonderWidget", "MegaWidget", "HyperWidget" );
 $chartXPos = 20;
 $chartYPos = 250;
@@ -88,7 +92,7 @@ $pdf->SetFont( 'Arial', 'B', 15 );
 // "PRODUCT" cell
 $pdf->SetTextColor( $tableHeaderTopProductTextColour[0], $tableHeaderTopProductTextColour[1], $tableHeaderTopProductTextColour[2] );
 $pdf->SetFillColor( $tableHeaderTopProductFillColour[0], $tableHeaderTopProductFillColour[1], $tableHeaderTopProductFillColour[2] );
-$pdf->Cell( 46, 12, " PRODUCT", 1, 0, 'L', true );
+$pdf->Cell( 46, 12, " SN", 1, 0, 'L', true );
 
 // Remaining header cells
 $pdf->SetTextColor( $tableHeaderTopTextColour[0], $tableHeaderTopTextColour[1], $tableHeaderTopTextColour[2] );
@@ -133,6 +137,6 @@ if (file_exists('Reports/report.pdf')) {
 	unlink('Reports/report.pdf');
 }
 $pdf->Output( "Reports/report.pdf", "F" );
-echo "<b>Report has been saved successfully<a href='pages/operations.php'><button>OK</button></a></b>";
+echo "<b>Report has been saved successfully</b>";
 	// header("Location:pages/operations.php");
 ?>

@@ -213,3 +213,7 @@
 .select-style select:focus {
     outline: none;
 }
+#indent_from_left{
+	/*text-indent: 5px;*/
+	color: red;
+}
