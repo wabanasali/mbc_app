@@ -3,13 +3,13 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h3 class="modal-title text-center" id="lineModalLabel">QUATER REPORT FORM</h3>
+						<h3 class="modal-title text-center" id="lineModalLabel">QUATER INCOME REPORT FORM</h3>
 					</div>
 					<div class="modal-body">
 						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
 						<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-						<form class="form-horizontal" action="../controller.php?qreport=quater_report" role="form" method="POST">
-						<input type="hidden" name="qreport" value="quater_report"/>
+						<form class="form-horizontal" action="../controller.php?qreport1=quater_report" role="form" method="POST">
+						<input type="hidden" name="qreport1" value="quater_report"/>
 			              <div class="form-group">
 							<label for="motif" class="col-sm-6 control-label">FINANCIAL YEAR</label>
 								<div class="col-sm-6">

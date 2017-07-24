@@ -80,6 +80,7 @@ $year = $f_year_array['f_year'];
 
 //go to the database and data now
 $raw_month_exp_multi_array = exp_multi_array($abr_month, $f_year_id);
+// var_dump($raw_month_exp_multi_array);
 for ($i=0; $i < sizeof($raw_month_exp_multi_array); $i++) { 
   $sum_amount += $raw_month_exp_multi_array[$i]['amount'];
 }
@@ -241,25 +242,28 @@ for ($t=0; $t < sizeof($data1); $t++) {
     $pdf->SetTextColor( $tableHeaderLeftTextColour[0], $tableHeaderLeftTextColour[1], $tableHeaderLeftTextColour[2] );
     $pdf->SetFillColor( $tableHeaderLeftFillColour[0], $tableHeaderLeftFillColour[1], $tableHeaderLeftFillColour[2] );
     if ($sum == 0) {
-      $t += 1;
+      // $t += 1;
       $row += 1;
     }
+    else{
+      $pdf->Cell( 60, 8, " " . $mod_row_labels[$row], 1, 0, 'L', $fill );
     
-    $pdf->Cell( 60, 8, " " . $mod_row_labels[$row], 1, 0, 'L', $fill );
-    
-    // Create the data cells
-    $pdf->SetTextColor( $textColour[0], $textColour[1], $textColour[2] );
-    $pdf->SetFillColor( $tableRowFillColour[0], $tableRowFillColour[1], $tableRowFillColour[2] );
-    $pdf->SetFont( 'Arial', '', 10 );
+      // Create the data cells
+      $pdf->SetTextColor( $textColour[0], $textColour[1], $textColour[2] );
+      $pdf->SetFillColor( $tableRowFillColour[0], $tableRowFillColour[1], $tableRowFillColour[2] );
+      $pdf->SetFont( 'Arial', '', 10 );
 
-    for ( $i=0; $i<sizeof($columnLabels); $i++ ) {
-        $pdf->Cell( 30, 8, ( number_format( $data1[$t][$i] ) ), 1, 0, 'C', $fill );
+      for ( $i=0; $i<sizeof($columnLabels); $i++ ) {
+          $pdf->Cell( 30, 8, ( number_format( $data1[$t][$i] ) ), 1, 0, 'C', $fill );
+      }
+      //undo flag and move on
+      // $associated_flag = 0;
+      $row++;
+      $fill = !$fill;
+      $pdf->Ln( 8 );
     }
-    //undo flag and move on
-    // $associated_flag = 0;
-    $row++;
-    $fill = !$fill;
-    $pdf->Ln( 8 );
+    
+    
 }
 /***
   Serve the PDF

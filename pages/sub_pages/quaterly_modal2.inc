@@ -1,20 +1,20 @@
-<div class="modal fade" id="squarespaceModal4" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			<div class="modal fade" id="squarespaceModal6" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-						<h3 class="modal-title text-center" id="lineModalLabel">MONTHLY EXPENDITURE REPORT FORM</h3>
+						<h3 class="modal-title text-center" id="lineModalLabel">QUATER EXPENDITURE REPORT FORM</h3>
 					</div>
 					<div class="modal-body">
 						<img id="church_icon" src="..//images/churchicon.png" id="church_icon">
 						<img id="church_logo" src="..//images/MBCMolyko.png" id="church_logo">
-						<form class="form-horizontal" action="../controller.php?mreport2=monthly_report" role="form" method="POST">
-						<input type="hidden" name="mreport2" value="monthly_report"/>
+						<form class="form-horizontal" action="../controller.php?qreport2=quater_report" role="form" method="POST">
+						<input type="hidden" name="qreport2" value="quater_report"/>
 			              <div class="form-group">
 							<label for="motif" class="col-sm-6 control-label">FINANCIAL YEAR</label>
 								<div class="col-sm-6">
 									<div class="select-style">
-										<select name="year_month_exp" id="fin_year_id2_month" onchange="monthly_update_rpt_notification()" required>
+										<select name="selected_fin_yr_qtr_exp" id="fin_year_qtr_exp" onchange="update_rpt_notification2_exp()" required>
 											<?php 
 												$fin_year_info = get_financial_year();
 												// echo $fin_year_info;
@@ -29,40 +29,32 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group" id="hidden_select_div" hidden>
-								<label for="motif" class="col-sm-6 control-label">MONTH OF YEAR</label>
+							<div class="form-group" id="hidden_select_qtr_div_exp" hidden>
+								<label for="motif" class="col-sm-6 control-label">QUATER OF YEAR</label>
 								<div class="col-sm-6">
 									<div class="select-style">
-										<select name="selected_month_exp" id="selected_month_id" onchange="monthly2_update_rpt_notification()" required>
+										<select name="selected_quater_exp" id="quater_id_exp" onchange="update_rpt_notification3_exp()" required>
 											<option value="0">Choose</option>
-											<option value="Jan">JANUARY</option>
-											<option value="Feb">FEBRUARY</option>
-											<option value="Mar">MARCH</option>
-											<option value="Apr">APRIL</option>
-											<option value="May">MAY</option>
-											<option value="Jun">JUNE</option>
-											<option value="Jul">JULY</option>
-											<option value="Aug">AUGUST</option>
-											<option value="Sep">SEPTEMBER</option>
-											<option value="Oct">OCTOBER</option>
-											<option value="Nov">NOVEMBER</option>
-											<option value="Dec">DECEMBER</option>
+											<option value="1">1st QUATER</option>
+											<option value="2">2nd QUATER</option>
+											<option value="3">3rd QUATER</option>
+											<option value="4">4th QUATER</option>
 										</select>
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
-								<p class="text-center anual_rpt_notification" id="anual_rpt_notification2">PLEASE CHOOSE THE YEAR WHOSE MONTHLY FINANCIAL REPORT IS DESIRED</p>
+								<p class="text-center anual_rpt_notification" id="anual_rpt_notification3_exp">PLEASE CHOOSE THE YEAR WHOSE QUATER FINANCIAL REPORT IS DESIRED</p>
 							</div>
 							<div class="btn-group btn-group-justified" role="group" aria-label="group button">
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
 							</div>
 							<div class="btn-group btn-delete hidden" role="group">
-								<button type="buttonl" id="delImage2" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
+								<button type="buttonl" id="del_Image_exp" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Close</button>
 							</div>
 							<div class="btn-group" role="group" disabled>
-								<button type="submit" id="saveImage2" class="btn btn-primary btn-hover-green" data-action="save" role="button" disabled>Print</button>
+								<button type="submit" id="save_Image_exp" class="btn btn-primary btn-hover-green" data-action="save" role="button" disabled>Print</button>
 							</div>
 						</div>
 			          </form>

@@ -190,25 +190,27 @@ for ($t=0; $t < sizeof($data); $t++) {
     $pdf->SetTextColor( $tableHeaderLeftTextColour[0], $tableHeaderLeftTextColour[1], $tableHeaderLeftTextColour[2] );
     $pdf->SetFillColor( $tableHeaderLeftFillColour[0], $tableHeaderLeftFillColour[1], $tableHeaderLeftFillColour[2] );
     if ($sum == 0) {
-      $t += 1;
+      // $t += 1;
       $row += 1;
     }
     
-    $pdf->Cell( 60, 8, " " . $mod_row_labels[$row], 1, 0, 'L', $fill );
+    else{
+      $pdf->Cell( 60, 8, " " . $mod_row_labels[$row], 1, 0, 'L', $fill );
     
-    // Create the data cells
-    $pdf->SetTextColor( $textColour[0], $textColour[1], $textColour[2] );
-    $pdf->SetFillColor( $tableRowFillColour[0], $tableRowFillColour[1], $tableRowFillColour[2] );
-    $pdf->SetFont( 'Arial', '', 10 );
+      // Create the data cells
+      $pdf->SetTextColor( $textColour[0], $textColour[1], $textColour[2] );
+      $pdf->SetFillColor( $tableRowFillColour[0], $tableRowFillColour[1], $tableRowFillColour[2] );
+      $pdf->SetFont( 'Arial', '', 10 );
 
-    for ( $i=0; $i<sizeof($columnLabels); $i++ ) {
-        $pdf->Cell( 30, 8, ( number_format( $data[$t][$i] ) ), 1, 0, 'C', $fill );
+      for ( $i=0; $i<sizeof($columnLabels); $i++ ) {
+          $pdf->Cell( 30, 8, ( number_format( $data[$t][$i] ) ), 1, 0, 'C', $fill );
+      }
+      //undo flag and move on
+      // $associated_flag = 0;
+      $row++;
+      $fill = !$fill;
+      $pdf->Ln( 8 );
     }
-    //undo flag and move on
-    // $associated_flag = 0;
-    $row++;
-    $fill = !$fill;
-    $pdf->Ln( 8 );
 }
 /***
   Serve the PDF

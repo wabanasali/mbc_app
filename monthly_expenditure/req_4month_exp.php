@@ -47,16 +47,16 @@
 			$purpose = $row['purpose'];
 			$amount = $row['amount'];
 			if ($month == $given_month) {
-				$week_array['semaine'] = $week_mod5;
-				$week_array['amount'] = $amount;
-				$week_array['purpose'] = $purpose;
+				$semaine_array['semaine'] = $week_mod5;
+				$semaine_array['amount'] = $amount;
+				$semaine_array['purpose'] = $purpose;
 			}
 			else{
 				$semaine_array['semaine'] = $week_mod5;
 				$semaine_array['amount'] = 0;
 				$semaine_array['purpose'] = $purpose;
 			}
-			array_push($mois_exp_multi_array, $week_array);
+			array_push($mois_exp_multi_array, $semaine_array);
 		}
 		return $mois_exp_multi_array;
 	}

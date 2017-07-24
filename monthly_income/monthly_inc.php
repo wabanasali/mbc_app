@@ -30,9 +30,12 @@ $logoFile = "widget-company-logo.png";
 $logoXPos = 50;
 $logoYPos = 108;
 $logoWidth = 110;
-$sum_amount = 0;
+$sum_amount = 1;
 $abr_month = $_GET['abr_month'];
 $f_year_id = $_GET['f_year_id'];
+// var_dump($f_year_id);
+$raw_month_inc_multi_array = income_multi_array($abr_month, $f_year_id);
+// var_dump($raw_month_inc_multi_array);
 //set month
 if (strcmp($abr_month, 'Jan') ==  0) {
   $month = 'JANUARY';
@@ -79,7 +82,8 @@ $f_year_array = mysql_fetch_array($f_year_rslt);
 $year = $f_year_array['f_year'];
 
 //go to the database and data now
-$raw_month_inc_multi_array = income_multi_array($abr_month, $f_year_id);
+// $raw_month_inc_multi_array = income_multi_array('Jan', 2);
+// var_dump($raw_month_inc_multi_array);
 for ($i=0; $i < sizeof($raw_month_inc_multi_array); $i++) { 
   $sum_amount += $raw_month_inc_multi_array[$i]['amount'];
 }
@@ -220,33 +224,32 @@ $pdf->Ln( 8 );
 
 $fill = false;
 $row = 0;
-$sum = array();
-for ($x=0; $x < sizeof($data1); $x++) { 
-    $sum[$x] = array_sum($data1[$x]);
-}
 for ($t=0; $t < sizeof($data1); $t++) {
+    $sum = array_sum($data1[$t]);
     $pdf->SetFont( 'Arial', 'B', 10 );
     $pdf->SetTextColor( $tableHeaderLeftTextColour[0], $tableHeaderLeftTextColour[1], $tableHeaderLeftTextColour[2] );
     $pdf->SetFillColor( $tableHeaderLeftFillColour[0], $tableHeaderLeftFillColour[1], $tableHeaderLeftFillColour[2] );
-    if ($sum[$t] == 0) {
-      $t += 1;
+    if ($sum == 0) {
+      // $t += 1;
       $row += 1;
     }
-    
-    $pdf->Cell( 60, 8, " " . $mod_row_labels[$row], 1, 0, 'L', $fill );
-    
-    // Create the data cells
-    $pdf->SetTextColor( $textColour[0], $textColour[1], $textColour[2] );
-    $pdf->SetFillColor( $tableRowFillColour[0], $tableRowFillColour[1], $tableRowFillColour[2] );
-    $pdf->SetFont( 'Arial', '', 10 );
+    else{
 
-    for ( $i=0; $i<sizeof($columnLabels); $i++ ) {
-        $pdf->Cell( 30, 8, ( number_format( $data1[$t][$i] ) ), 1, 0, 'C', $fill );
+      $pdf->Cell( 60, 8, " " . $mod_row_labels[$row], 1, 0, 'L', $fill );
+      
+      // Create the data cells
+      $pdf->SetTextColor( $textColour[0], $textColour[1], $textColour[2] );
+      $pdf->SetFillColor( $tableRowFillColour[0], $tableRowFillColour[1], $tableRowFillColour[2] );
+      $pdf->SetFont( 'Arial', '', 10 );
+
+      for ( $i=0; $i<sizeof($columnLabels); $i++ ) {
+          $pdf->Cell( 30, 8, ( number_format( $data1[$t][$i] ) ), 1, 0, 'C', $fill );
+      }
+      
+      $row++;
+      $fill = !$fill;
+      $pdf->Ln( 8 );
     }
-    
-    $row++;
-    $fill = !$fill;
-    $pdf->Ln( 8 );
 }
 
 //create second table

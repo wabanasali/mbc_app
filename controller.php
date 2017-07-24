@@ -188,36 +188,57 @@
 			}
 		}
 		//generating monthly report
-		elseif (isset($_POST['mreport'])) {
-			$supplied_year = trim(strip_tags($_POST['selected_fin_yr_id2']));
-			$supplied_month = trim(strip_tags($_POST['selected_month']));
+		else if (isset($_POST['mreport1'])) {
 			//this is for income
-			// header("Location: monthly_income/monthly_inc.php?f_year_id=$supplied_year&abr_month=$supplied_month");
-			//this is for expenditure
-			header("Location: monthly_expenditure/monthly_exp.php?f_year_id=$supplied_year&abr_month=$supplied_month");
-			// echo "Month: ".$supplied_month." Year: ".$supplied_year;
-		}
-		//generating quaterly report
-		elseif (isset($_POST['qreport'])) {
-			# check if it is current year or an already past year, cause printing and redirect to operations page
-			if ($_POST['qreport'] == 'quater_report') {
-				$supplied_year_id = trim(strip_tags($_POST['selected_fin_yr_qtr']));
-				$supplied_quater = trim(strip_tags($_POST['selected_quater']));
-				// echo "Year: ".$supplied_year." Quater: ".$supplied_quater;
-				// if ($supplied_quater == 0) {
-				// 	header("Location: quater_report.php");
-				// }
-				// else{
-				// 	header("Location: quater_report.php");
-				// }
-				// echo "Wonder ful palava";
-				header("Location: quaterly_inc/quaterly_inc.php?quater=$supplied_quater&f_year_id=$supplied_year_id");
+			$supplied_year = trim(strip_tags($_POST['year_month_inc']));
+			$supplied_month = trim(strip_tags($_POST['selected_month_inc']));
+			if (isset($supplied_year) && isset($supplied_month)) {
+				// echo "Month: ".$supplied_month." Year: ".$supplied_year;
+				header("Location: monthly_income/monthly_inc.php?f_year_id=$supplied_year&abr_month=$supplied_month");
+			}
+			else{
+				echo "Whoops Something is wrong so can't give you Month and Year!!";
 			}
 		}
-		elseif (isset($_POST['areport'])) {
-			# check if it is current year or an already past year, cause printing and redirect to operations page
-			$supplied_year = trim(strip_tags($_POST['selected_fin_yr_id']));
-			header("Location: mc_quater_report.php");
+		else if (isset($_POST['mreport2'])) {
+			//this is for expenditure
+			$supplied_year2 = trim(strip_tags($_POST['year_month_exp']));
+			$supplied_month2 = trim(strip_tags($_POST['selected_month_exp']));
+			
+			if (isset($supplied_year2) && isset($supplied_month2)) {
+				// echo "Month: ".$supplied_month2." Year: ".$supplied_year2;
+				//go and fix this one for here so
+				header("Location: monthly_expenditure/monthly_exp.php?f_year_id=$supplied_year2&abr_month=$supplied_month2");
+			}
+			else{
+				echo "Whoops Something is wrong so can't give you Month and Year!!";
+			}
+		}
+		//generating quaterly report
+		elseif (isset($_POST['qreport1'])) {
+			//This is for income
+			$supplied_year_id = trim(strip_tags($_POST['selected_fin_yr_qtr']));
+			$supplied_quater = trim(strip_tags($_POST['selected_quater']));
+			
+			if (isset($supplied_year_id) && isset($supplied_quater)) {
+				// echo "Quater: ".$supplied_quater." Year: ".$supplied_year_id;
+				header("Location: quaterly_inc/quaterly_inc.php?quater=$supplied_quater&f_year_id=$supplied_year_id");
+			}
+			else{
+				echo "Whoops Something is wrong so can't give you Quater and Year!!";
+			}
+		}
+		elseif (isset($_POST['qreport2'])) {
+			//This is for expenditure
+			$supplied_year_id2 = trim(strip_tags($_POST['selected_fin_yr_qtr_exp']));
+			$supplied_quater2 = trim(strip_tags($_POST['selected_quater_exp']));
+			if (isset($supplied_year_id2) && isset($supplied_quater2)) {
+				// echo "Quater: ".$supplied_quater2." Year: ".$supplied_year_id2;
+				header("Location: ../quaterly_exp/quarterly_exp.php?quater=$supplied_quater2&f_year_id=$supplied_year_id2");
+			}
+			else{
+				echo "Whoops Something is wrong so can't give you Quater and Year!!";
+			}
 		}
 		elseif (isset($_POST['update_item'])) {
 			#get values to use for update

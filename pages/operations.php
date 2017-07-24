@@ -116,12 +116,14 @@
 			<?php 
 				//monthly report modal 
 				include "sub_pages/monthly_modal.inc";
+				//monthly report2 modal
+				include "sub_pages/monthly_modal2.inc";
 				//upload file modal
 				include "sub_pages/upload_modal.inc";
-				//annual report modal
-				include "sub_pages/annual_modal.inc";
 				//quater report modal
 				include "sub_pages/quaterly_modal.inc";
+				//quater report 2 modal
+				include "sub_pages/quaterly_modal2.inc";
 			?>
 		</div>
 			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -134,18 +136,20 @@
 						</b> (Available)</h5>
 						<div class="form-group" id="cash_in_cash_out_buttons">
 							<!-- <button type="button" id="cash_in_button" onclick="download_qreport();">Q Report</button> -->
-							<button class="btn btn-default" type="button" id="cash_in_button" data-toggle="modal" data-target="#squarespaceModal2">Q Report</button>
-							<button class="btn btn-default" type="button" id="cash_out_button" data-toggle="modal" data-target="#squarespaceModal">A Report</button>
+							<button class="btn btn-default" type="button" id="cash_in_button" data-toggle="modal" data-target="#squarespaceModal2"><b>Q Report 1</b></button>
+							<button class="btn btn-default" type="button" id="cash_out_button" data-toggle="modal" data-target="#squarespaceModal6"><b>Q Report 2</b></button>
 						</div>
 						<div class="text-center" id="cash_in_hidder">
 							<a href="mod_operations.php">
-							<button class="btn btn-default" id="go_to_cash_out_button">GO TO CASH OUT</button>
+							<button class="btn btn-default" id="go_to_cash_out_button"><b>GO TO CASH OUT</b></button>
 							</a>
 						</div>
 						<div class="text-center" id="">
+						<br/>
+							<a href="#squarespaceModal7" data-toggle="modal"><b>M_RPT1 </b></a><b>|</b>
 							<a href="#squarespaceModal3" data-toggle="modal"><b>UPLOAD FILE</b></a>
 							<b>|</b>
-							<a href="#squarespaceModal4" data-toggle="modal"><b>MONTHLY_REPORT</b></a>
+							<a href="#squarespaceModal4" data-toggle="modal"><b>M_RPT2</b></a>
 							<?php 
 								if (isset($_GET['feedback'])) {
 									echo "<br><b>NO DATA AVAILABLE</b>";
