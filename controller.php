@@ -10,11 +10,11 @@
 				header("Location: pages/overviewtransactions.php");
 			}
 			elseif ($result == 1) {
-				header("Location: home.php?warning_message=w_msg");
+				header("Location: index.php?warning_message=w_msg");
 			}
 			else{
 				//result can only be -1
-				header("Location: home.php?error_message=e_msg");
+				header("Location: index.php?error_message=e_msg");
 			}
 		}
 		function coordinate_signup($f_name, $usr_name, $usr_pswd, $usr_conf_pswd){
@@ -24,23 +24,23 @@
 				$result1 = signup($f_name, $usr_name, $usr_pswd);
 				if ($result1 == 0) {
 					//sign up possible, notify user to proceed to login
-					header("Location: home.php?success_message=s_message");
+					header("Location: index.php?success_message=s_message");
 				}
 				else{
 					//sign up not possible, warn
-					header("Location: home.php?fail_message=f1_message");
+					header("Location: index.php?fail_message=f1_message");
 				}
 			}
 			else{
 				//passwords do not agree, warn the user
-				header("Location: home.php?missmatch_message=f2_message");
+				header("Location: index.php?missmatch_message=f2_message");
 			}
 		}
 		function coordinate_logout(){
 			//this function coordinates the logout procedure
 			$_SESSION['login'] = "no";
 			// $_SESSION['login_id'] = '';
-			header("Location: home.php");
+			header("Location: index.php");
 			exit();
 		}
 		function coordinate_qreport_download(){

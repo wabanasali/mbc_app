@@ -17,7 +17,7 @@
 	if (!isset($_SESSION)) {
 		session_start();
 		if (@$_SESSION['login'] != "yes") {
-			header("Location: ..//home.php");
+			header("Location: ..//index.php");
 			exit();
 		}
 	}
