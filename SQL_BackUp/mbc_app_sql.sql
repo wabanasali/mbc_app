@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 08, 2017 at 04:37 PM
+-- Generation Time: Aug 05, 2017 at 10:36 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -20,60 +20,6 @@ SET time_zone = "+00:00";
 -- Database: `mbc`
 --
 
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `associated_expenses_view`
---
-CREATE TABLE IF NOT EXISTS `associated_expenses_view` (
-`total_expenses` decimal(32,0)
-,`todayDate` datetime
-);
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `associated_htgofferings_view`
---
-CREATE TABLE IF NOT EXISTS `associated_htgofferings_view` (
-`total_htgOfferings` decimal(32,0)
-,`todayDate` datetime
-);
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `associated_otherofferings_view`
---
-CREATE TABLE IF NOT EXISTS `associated_otherofferings_view` (
-`total_otherOfferings` decimal(32,0)
-,`todayDate` datetime
-);
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `associated_projects_view`
---
-CREATE TABLE IF NOT EXISTS `associated_projects_view` (
-`total_projects` decimal(32,0)
-,`todayDate` datetime
-);
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `associated_regofferings_view`
---
-CREATE TABLE IF NOT EXISTS `associated_regofferings_view` (
-`total_regOfferings` decimal(32,0)
-,`todayDate` datetime
-);
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `associated_tithes_view`
---
-CREATE TABLE IF NOT EXISTS `associated_tithes_view` (
-`total_tithes` decimal(32,0)
-,`todayDate` datetime
-);
 -- --------------------------------------------------------
 
 --
@@ -136,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `christians` (
   `f_year_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `f_year_id` (`f_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `christians`
@@ -145,21 +91,25 @@ CREATE TABLE IF NOT EXISTS `christians` (
 INSERT INTO `christians` (`id`, `name`, `baptised_on`, `matricule`, `f_year_id`) VALUES
 (1, 'SAMURUJUKUMA KUSFRABUJANZA', '2013-06-10 00:00:00', 'MBC20160001', 1),
 (2, 'AMBOREKEBIYA OUMAROU', '2011-07-14 00:00:00', 'MBC20160002', 1),
-(3, 'TASSANG WILFRED OLUWA NAGODEH', '2016-05-09 00:00:00', 'MBC20160003', 1);
+(3, 'TASSANG WILFRED OLUWA NAGODEH', '2016-05-09 00:00:00', 'MBC20160003', 1),
+(4, 'MONJIMBO EKEMA MARTIN', '2005-02-22 00:00:00', 'MBC20170001', 2),
+(25, 'ALI MIMBA NTUNYU', '2013-06-10 00:00:00', 'MBC20170002', 1),
+(29, 'THEOPHILUS WABA NASALI', '2017-05-26 06:00:12', 'MBC20170004', 2),
+(30, 'ADAMU RAMATU NDISI', '2017-05-26 06:05:43', 'MBC20170006', 2),
+(31, 'NCHAM DESMOND MOLAR', '2017-05-26 06:05:43', 'MBC20170005', 2),
+(32, 'JAM JUDE KUM', '2017-05-26 06:09:29', 'MBC20170003', 2),
+(33, 'NCHANSUH RENE MBING', '2017-05-26 06:09:29', 'MBC20170007', 2),
+(34, 'NGONG DYSLAIN YEMFU', '2017-05-26 06:09:29', 'MBC20170008', 2);
 
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `daystatistics`
+-- Table structure for table `daystatistics`
 --
-CREATE TABLE IF NOT EXISTS `daystatistics` (
-`total_expenses` decimal(32,0)
-,`total_htgOfferings` decimal(32,0)
-,`total_otherOfferings` decimal(32,0)
-,`total_projects` decimal(32,0)
-,`total_regOfferings` decimal(32,0)
-,`total_tithes` decimal(32,0)
-);
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `mbc`.`daystatistics` AS select `e`.`total_expenses` AS `total_expenses`,`h`.`total_htgOfferings` AS `total_htgOfferings`,`o`.`total_otherOfferings` AS `total_otherOfferings`,`p`.`total_projects` AS `total_projects`,`r`.`total_regOfferings` AS `total_regOfferings`,`t`.`total_tithes` AS `total_tithes` from (((((`mbc`.`associated_expenses_view` `e` join `mbc`.`associated_htgofferings_view` `h`) join `mbc`.`associated_otherofferings_view` `o`) join `mbc`.`associated_projects_view` `p`) join `mbc`.`associated_regofferings_view` `r`) join `mbc`.`associated_tithes_view` `t`);
+-- Error reading data: (#1356 - View 'mbc.daystatistics' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them)
+
 -- --------------------------------------------------------
 
 --
@@ -189,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   PRIMARY KEY (`id`),
   KEY `u_id` (`u_id`),
   KEY `f_year_id` (`f_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 --
 -- Dumping data for table `expenses`
@@ -215,7 +165,24 @@ INSERT INTO `expenses` (`id`, `amount`, `purpose`, `withdrawn_on`, `u_id`, `f_ye
 (17, 400000, 'Disbursed to Truste Committee for buying of L', '2017-05-05 17:30:00', 22, 2),
 (18, 500000, 'buying of new land', '2017-05-06 09:30:00', 22, 2),
 (19, 50000, 'expenses on project', '2017-05-08 13:24:17', 22, 2),
-(20, 100000, 'pastors salary for the month', '2017-05-08 13:25:47', 22, 2);
+(20, 100000, 'pastors salary for the month', '2017-05-08 13:25:47', 22, 2),
+(21, 1000000, 'expenses on project', '2017-05-10 09:50:24', 22, 2),
+(22, 100000, 'Purchase of computers', '2017-05-17 03:28:58', 22, 2),
+(23, 150000, 'pastors salary for the month', '2017-05-17 09:34:55', 22, 2),
+(24, 12000, 'Help to the NDIMUNGWA Family', '2017-05-17 09:43:16', 22, 2),
+(25, 10000, 'expenses on project', '2017-05-17 09:52:32', 22, 2),
+(26, 150000, 'expenses on project', '2017-05-20 07:32:28', 22, 2),
+(27, 120000, 'pastors salary for the month', '2017-05-20 09:51:56', 22, 2),
+(28, 10000, 'pastors salary for the month', '2017-05-20 09:53:35', 22, 2),
+(29, 10000, 'expenses on project', '2017-05-20 09:55:06', 22, 2),
+(30, 5000, 'expenses on project', '2017-05-20 09:55:54', 22, 2),
+(31, 5000, 'Help to the destitute', '2017-05-20 09:56:38', 22, 2),
+(32, 50000, 'expenses on project', '2017-05-22 10:19:09', 22, 2),
+(33, 20000, 'expenses on project', '2017-05-22 13:13:40', 22, 2),
+(37, 30000, 'pastors salary for the month', '2017-05-24 18:25:55', 22, 2),
+(38, 120000, 'pastors salary for the month', '2017-05-29 08:38:35', 22, 2),
+(40, 20000, 'Feeding for Church Hosting of FCC', '2017-05-29 08:39:45', 22, 2),
+(43, 28000, 'Benevolence to the needy', '2017-07-24 14:07:29', 22, 2);
 
 -- --------------------------------------------------------
 
@@ -252,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `htg_offerings` (
   PRIMARY KEY (`id`),
   KEY `u_id` (`u_id`),
   KEY `f_year_id` (`f_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `htg_offerings`
@@ -266,7 +233,10 @@ INSERT INTO `htg_offerings` (`id`, `amount`, `collected_on`, `u_id`, `f_year_id`
 (5, 10002600, '2017-04-18 07:30:00', 22, 2),
 (6, 500000, '2017-05-05 07:30:00', 22, 2),
 (7, 120000, '2017-05-06 13:18:35', 22, 2),
-(8, 150000, '2017-05-08 13:37:51', 22, 2);
+(8, 150000, '2017-05-08 13:37:51', 22, 2),
+(9, 20000, '2017-05-17 08:56:36', 22, 2),
+(10, 20000, '2017-05-20 07:38:22', 22, 2),
+(11, 120000, '2017-05-29 08:40:09', 22, 2);
 
 -- --------------------------------------------------------
 
@@ -291,24 +261,30 @@ CREATE TABLE IF NOT EXISTS `other_offerings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `amount` int(11) NOT NULL,
   `collected_on` datetime NOT NULL DEFAULT '2016-09-01 09:30:00',
+  `purpose` varchar(250) NOT NULL DEFAULT 'special thanksgiving',
   `u_id` int(11) NOT NULL,
   `f_year_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `u_id` (`u_id`),
   KEY `f_year_id` (`f_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `other_offerings`
 --
 
-INSERT INTO `other_offerings` (`id`, `amount`, `collected_on`, `u_id`, `f_year_id`) VALUES
-(0, 30000, '2016-09-01 09:30:00', 22, 1),
-(2, 100000, '2017-01-24 09:30:00', 22, 2),
-(3, 700000, '2017-01-24 12:30:00', 22, 2),
-(4, 10000000, '2017-02-07 09:30:00', 22, 2),
-(5, 2050, '2017-04-18 09:30:00', 22, 2),
-(6, 25000, '2017-05-05 09:30:00', 22, 2);
+INSERT INTO `other_offerings` (`id`, `amount`, `collected_on`, `purpose`, `u_id`, `f_year_id`) VALUES
+(0, 30000, '2016-09-01 09:30:00', 'special thanksgiving', 22, 1),
+(2, 100000, '2017-01-24 09:30:00', 'special thanksgiving', 22, 2),
+(3, 700000, '2017-01-24 12:30:00', 'special thanksgiving', 22, 2),
+(4, 10000000, '2017-02-07 09:30:00', 'special thanksgiving', 22, 2),
+(5, 2050, '2017-04-18 09:30:00', 'special thanksgiving', 22, 2),
+(6, 25000, '2017-05-05 09:30:00', 'special thanksgiving', 22, 2),
+(7, 20000, '2017-05-20 09:50:05', 'special thanks giving', 22, 2),
+(8, 50000, '2017-05-20 09:51:13', 'Graduating Students Thanksgiving', 22, 2),
+(9, 20000, '2017-05-24 10:22:31', 'miscelaneous', 22, 2),
+(10, 20000, '2017-05-24 11:31:23', 'Donation from Health Services', 22, 2),
+(11, 50000, '2017-05-24 11:32:26', 'Ndikum family donation for pastornage', 22, 2);
 
 -- --------------------------------------------------------
 
@@ -353,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `project_offerings` (
   KEY `c_id` (`c_id`),
   KEY `u_id` (`u_id`),
   KEY `f_year_id` (`f_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `project_offerings`
@@ -373,7 +349,14 @@ INSERT INTO `project_offerings` (`id`, `amount`, `collected_on`, `c_id`, `u_id`,
 (11, 400000, '2017-05-05 00:00:00', 3, 22, 2),
 (12, 10000, '2017-05-06 00:00:00', 2, 22, 2),
 (13, 20000, '2017-05-06 12:52:17', 2, 22, 2),
-(14, 10000, '2017-05-06 22:00:00', 3, 22, 2);
+(14, 10000, '2017-05-06 22:00:00', 3, 22, 2),
+(15, 50000, '2017-05-17 08:55:48', 3, 22, 2),
+(16, 10000, '2017-05-20 07:36:44', 1, 22, 2),
+(17, 10000, '2017-05-24 18:25:20', 4, 22, 2),
+(18, 10000, '2017-05-26 06:11:54', 25, 22, 2),
+(19, 10000, '2017-05-26 06:12:24', 32, 22, 2),
+(20, 2000, '2017-05-28 11:18:37', 4, 22, 2),
+(21, 8000, '2017-05-29 08:37:40', 32, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -390,7 +373,7 @@ CREATE TABLE IF NOT EXISTS `regular_offerings` (
   PRIMARY KEY (`id`),
   KEY `u_id` (`u_id`),
   KEY `f_year_id` (`f_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `regular_offerings`
@@ -402,7 +385,16 @@ INSERT INTO `regular_offerings` (`id`, `amount`, `collected_on`, `u_id`, `f_year
 (3, 50000, '2017-01-25 07:30:00', 22, 2),
 (4, 92000, '2017-04-18 07:30:00', 22, 2),
 (5, 50000, '2017-05-05 07:30:00', 22, 2),
-(6, 70000, '2017-05-08 13:09:32', 22, 2);
+(6, 70000, '2017-05-08 13:09:32', 22, 2),
+(7, 32000, '2017-05-17 09:45:11', 22, 2),
+(8, 10000, '2017-05-20 07:31:41', 22, 2),
+(9, 200000, '2017-05-20 07:32:59', 22, 2),
+(10, 15000, '2017-05-20 07:38:56', 22, 2),
+(11, 50000, '2017-05-20 07:41:45', 22, 2),
+(12, 10000, '2017-05-20 07:43:00', 22, 2),
+(13, 10000, '2017-05-20 07:55:11', 22, 2),
+(14, 15000, '2017-05-20 07:59:23', 22, 2),
+(15, 105000, '2017-05-29 08:40:42', 22, 2);
 
 -- --------------------------------------------------------
 
@@ -433,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `tithes` (
   PRIMARY KEY (`id`),
   KEY `c_id` (`c_id`),
   KEY `f_year_id` (`f_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `tithes`
@@ -454,7 +446,13 @@ INSERT INTO `tithes` (`id`, `amount`, `paid_on`, `c_id`, `f_year_id`) VALUES
 (25, 100000, '2017-05-03 00:00:00', 2, 2),
 (26, 100000, '2017-05-04 00:00:00', 2, 2),
 (27, 50000, '2017-05-06 00:00:00', 1, 2),
-(28, 20000, '2017-05-06 11:42:47', 3, 2);
+(28, 20000, '2017-05-06 11:42:47', 3, 2),
+(29, 30000, '2017-05-17 09:10:37', 3, 2),
+(30, 30000, '2017-05-17 09:49:54', 1, 2),
+(31, 50000, '2017-05-20 07:35:50', 1, 2),
+(32, 27000, '2017-05-22 13:20:12', 4, 2),
+(33, 3000, '2017-05-22 14:24:40', 1, 2),
+(34, 10000, '2017-05-29 08:37:07', 31, 2);
 
 -- --------------------------------------------------------
 
@@ -489,60 +487,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `created_on`, `full_name`) VALUES
 (22, 'admin', '21232f297a57a5a743894a0e4a801fc3', '19/12/2016', 'Adamu Ramatu Ndisi');
-
--- --------------------------------------------------------
-
---
--- Structure for view `associated_expenses_view`
---
-DROP TABLE IF EXISTS `associated_expenses_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `associated_expenses_view` AS select sum(`expenses`.`amount`) AS `total_expenses`,`expenses`.`withdrawn_on` AS `todayDate` from `expenses` where (`expenses`.`withdrawn_on` = convert(date_format(curdate(),'%d/%m/%Y') using latin1));
-
--- --------------------------------------------------------
-
---
--- Structure for view `associated_htgofferings_view`
---
-DROP TABLE IF EXISTS `associated_htgofferings_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `associated_htgofferings_view` AS select sum(`htg_offerings`.`amount`) AS `total_htgOfferings`,`htg_offerings`.`collected_on` AS `todayDate` from `htg_offerings` where (`htg_offerings`.`collected_on` = convert(date_format(curdate(),'%d/%m/%Y') using latin1));
-
--- --------------------------------------------------------
-
---
--- Structure for view `associated_otherofferings_view`
---
-DROP TABLE IF EXISTS `associated_otherofferings_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `associated_otherofferings_view` AS select sum(`other_offerings`.`amount`) AS `total_otherOfferings`,`other_offerings`.`collected_on` AS `todayDate` from `other_offerings` where (`other_offerings`.`collected_on` = convert(date_format(curdate(),'%d/%m/%Y') using latin1));
-
--- --------------------------------------------------------
-
---
--- Structure for view `associated_projects_view`
---
-DROP TABLE IF EXISTS `associated_projects_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `associated_projects_view` AS select sum(`project_offerings`.`amount`) AS `total_projects`,`project_offerings`.`collected_on` AS `todayDate` from `project_offerings` where (`project_offerings`.`collected_on` = convert(date_format(curdate(),'%d/%m/%Y') using latin1));
-
--- --------------------------------------------------------
-
---
--- Structure for view `associated_regofferings_view`
---
-DROP TABLE IF EXISTS `associated_regofferings_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `associated_regofferings_view` AS select sum(`regular_offerings`.`amount`) AS `total_regOfferings`,`regular_offerings`.`collected_on` AS `todayDate` from `regular_offerings` where (`regular_offerings`.`collected_on` = convert(date_format(curdate(),'%d/%m/%Y') using latin1));
-
--- --------------------------------------------------------
-
---
--- Structure for view `associated_tithes_view`
---
-DROP TABLE IF EXISTS `associated_tithes_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `associated_tithes_view` AS select sum(`tithes`.`amount`) AS `total_tithes`,`tithes`.`paid_on` AS `todayDate` from `tithes` where (`tithes`.`paid_on` = convert(date_format(curdate(),'%d/%m/%Y') using latin1));
 
 -- --------------------------------------------------------
 
@@ -597,15 +541,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `a_tithes_view`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `a_tithes_view` AS select sum(`tithes`.`amount`) AS `totalTithes` from `tithes` where (date_format(`tithes`.`paid_on`,'%Y-%m-%d') = curdate());
-
--- --------------------------------------------------------
-
---
--- Structure for view `daystatistics`
---
-DROP TABLE IF EXISTS `daystatistics`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `daystatistics` AS select `e`.`total_expenses` AS `total_expenses`,`h`.`total_htgOfferings` AS `total_htgOfferings`,`o`.`total_otherOfferings` AS `total_otherOfferings`,`p`.`total_projects` AS `total_projects`,`r`.`total_regOfferings` AS `total_regOfferings`,`t`.`total_tithes` AS `total_tithes` from (((((`associated_expenses_view` `e` join `associated_htgofferings_view` `h`) join `associated_otherofferings_view` `o`) join `associated_projects_view` `p`) join `associated_regofferings_view` `r`) join `associated_tithes_view` `t`);
 
 -- --------------------------------------------------------
 
