@@ -1,4 +1,5 @@
 # mbc_app
+<h1>About mbc_app</h1><br>
 This repo contains code for an app done in php that can be used to monitor church transactions such as offerings, and arms.<br>
 It also manages salaries or stipend of some personnel, notably the pastor.<br>
 <h1>Installation Procedure</h1>
