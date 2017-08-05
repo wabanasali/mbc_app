@@ -5,7 +5,8 @@ It also manages salaries or stipend of some personnel, notably the pastor.<br>
 <h1>Installation Procedure</h1>
 <br>1. Download wamp if your operating system is windows  (or lamp if you are using a linux variant or xampp for both)
 <br>2. After downloading the wamp ( or lamp or xampp as best suits your specifications), install it & then start it.
-<br>3. With wamp (or lamp or xamp) running, point your browser to: localhost/phpmyadmin & create a database with name <b>mbc</b> say
+<br>3. With wamp (or lamp or xamp) running, point your browser to: localhost/phpmyadmin & create a database with name <b>mbc</b> say.  
 <br>4. Download this entire repo and save in a folder <b>mbc</b> on your <b>wamp/www/</b> folder say
-<br>5. With your wamp (or lamp or xampp) running, now point your browser to the address <b>localhost/mbc</b>
-<br>6. Log In with <b>username:</b> admin & <b>password:</b> admin or simply create your own user & then enjoy
+<br>5. With this mbc database still selected, import the sql file <b>mbc_app_sql</b> in the folder <b>mbc/SQL_BackUp/</b> to populate the mbc database.
+<br>6. With your wamp (or lamp or xampp) running, now point your browser to the address <b>localhost/mbc</b>
+<br>7. Log In with <b>username:</b> admin & <b>password:</b> admin or simply create your own user & then enjoy
